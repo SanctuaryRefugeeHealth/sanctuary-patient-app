@@ -38,9 +38,9 @@ export default function Appointments() {
         <TableHead>
           <TableRow>
             <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+            <TableCell align="right">Patient</TableCell>
+            <TableCell align="right">Practitioner</TableCell>
+            <TableCell align="right">Date</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell>
           </TableRow>
         </TableHead>
