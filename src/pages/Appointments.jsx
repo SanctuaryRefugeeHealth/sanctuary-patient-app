@@ -34,30 +34,37 @@ const useStyles = makeStyles({
 const initHeaders = [
   {
     label: "Patient",
+    field: "patientName",
     direction: undefined // desc or asc,
   },
   {
     label: "Phone",
+    field: "patientPhone",
     direction: undefined // desc or asc,
   },
   {
     label: "Practitioner",
+    field: "practitionerName",
     direction: undefined // desc or asc,
   },
   {
     label: "Clinic",
+    field: "clinicName",
     direction: undefined // desc or asc,
   },
   {
     label: "Address",
+    field: "clinicAddress",
     direction: undefined // desc or asc,
   },
   {
     label: "Date",
+    field: "date",
     direction: undefined // desc or asc,
   },
   {
     label: "Confirmed",
+    field: "confirmed",
     direction: undefined // desc or asc,
   }
 ];
@@ -105,14 +112,27 @@ export default function Appointments() {
   }, [searchText, confirmed, rows]);
 
   const onHeaderClick = i => {
+    const direction = getNewDirection(headers[i].direction);
     setHeaders(prev => [
       ...prev.slice(0, i),
       {
         ...prev[i],
-        direction: getNewDirection(prev[i].direction)
+        direction
       },
       ...prev.slice(i + 1)
     ]);
+    const { field } = initHeaders[i];
+    const sorted = [...rows];
+    sorted.sort((a, b) => {
+      return direction === "asc"
+        ? a[field] > b[field]
+          ? 1
+          : -1
+        : b[field] > a[field]
+        ? 1
+        : -1;
+    });
+    setFilteredRows(sorted);
   };
 
   return (
@@ -166,7 +186,7 @@ export default function Appointments() {
         <TableBody>
           {filteredRows.map(row => (
             <TableRow
-              key={row.name}
+              key={row.id}
               hover
               onClick={() => history.push(`/appointments/${row.id}`)}
             >
