@@ -98,8 +98,8 @@ export default function Appointments() {
                 {row.name}
               </TableCell>
               <TableCell>{row.patient}</TableCell>
-              <TableCell>{row.patientPhone}</TableCell>
               <TableCell>{row.practitioner}</TableCell>
+              <TableCell>{row.patientPhone}</TableCell>
               <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
