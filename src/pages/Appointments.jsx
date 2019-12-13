@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 export default function Appointments() {
   const classes = useStyles();
   const [rows, setData] = useState([]);
-  const [isConfirmed, setIsConfirmed] = useState("");
+  const [confirmed, setConfirmed] = useState("");
   const [searchText, setSearchText] = useState("");
   const history = useHistory();
 
@@ -44,14 +44,16 @@ export default function Appointments() {
     .filter(
       row =>
         !searchText ||
-        row.patient.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.practitioner.toLowerCase().includes(searchText.toLowerCase())
+        row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.practitionerName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
     )
     .filter(
       row =>
-        !isConfirmed ||
-        (isConfirmed === "Yes" && row.isConfirmed) ||
-        (isConfirmed === "No" && !row.isConfirmed)
+        !confirmed ||
+        (confirmed === "Yes" && row.confirmed) ||
+        (confirmed === "No" && !row.confirmed)
     );
 
   return (
@@ -67,8 +69,8 @@ export default function Appointments() {
           <InputLabel id="confirmed">Confirmed?</InputLabel>
           <Select
             labelId="confirmed"
-            value={isConfirmed}
-            onChange={e => setIsConfirmed(e.target.value)}
+            value={confirmed}
+            onChange={e => setConfirmed(e.target.value)}
             style={{ width: "200px" }}
           >
             <MenuItem value="">&nbsp;</MenuItem>
