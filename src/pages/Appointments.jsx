@@ -14,7 +14,8 @@ import {
   MenuItem,
   Box,
   TextField,
-  TableSortLabel
+  TableSortLabel,
+  Button
 } from "@material-ui/core";
 import { getAppointments } from "../services/appointments";
 import { useHistory } from "react-router-dom";
@@ -74,27 +75,34 @@ export default function Appointments() {
   const [searchText, setSearchText] = useState("");
   const [headers, setHeaders] = useState(initHeaders);
   const history = useHistory();
+  const [filteredRows, setFilteredRows] = useState(rows);
 
   useEffect(() => {
     getAppointments().then(resp => setData(resp));
   }, [setData]);
 
-  const filteredRows = rows
-    .filter(
-      row =>
-        !searchText ||
-        row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.practitionerName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
-    )
-    .filter(
-      row =>
-        !confirmed ||
-        (confirmed === "Yes" && row.confirmed) ||
-        (confirmed === "No" && !row.confirmed)
-    )
-    .sort();
+  useEffect(() => {
+    setFilteredRows(
+      rows
+        .filter(
+          row =>
+            !searchText ||
+            row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.patientPhone.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.practitionerName
+              .toLowerCase()
+              .includes(searchText.toLowerCase()) ||
+            row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .filter(
+          row =>
+            !confirmed ||
+            (confirmed === "Yes" && row.confirmed) ||
+            (confirmed === "No" && !row.confirmed)
+        )
+    );
+  }, [searchText, confirmed, rows]);
 
   const onHeaderClick = i => {
     setHeaders(prev => [
@@ -129,6 +137,14 @@ export default function Appointments() {
             <MenuItem value="No">No</MenuItem>
           </Select>
         </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => history.push(`/appointments/new`)}
+          className={classes.button}
+        >
+          New Appointment
+        </Button>
       </Box>
 
       <Table className={classes.table} aria-label="simple table">
