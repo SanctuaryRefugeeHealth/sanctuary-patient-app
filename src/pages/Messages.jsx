@@ -15,6 +15,9 @@ const useStyles = makeStyles({
   },
   table: {
     minWidth: 650
+  },
+  replyRow: {
+    backgroundColor: "lightGrey"
   }
 });
 
@@ -54,7 +57,7 @@ const messages = [
 ];
 
 function createReplyData(phone_number, body, datetime) {
-  return { sender: phone_number, body, datetime, lang: "" };
+  return { sender: phone_number, body, datetime, lang: "", isReply: true };
 }
 const replies = [
   createReplyData(
@@ -102,7 +105,10 @@ export default function Messages() {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow key={row.name}>
+            <TableRow
+              key={row.name}
+              className={row.isReply ? classes.replyRow : null}
+            >
               <TableCell component="th" scope="row">
                 {row.sender}
               </TableCell>
