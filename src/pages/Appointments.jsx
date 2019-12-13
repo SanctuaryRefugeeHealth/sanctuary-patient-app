@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import { APPOINTMENTS } from "../constants/apis";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -34,6 +40,7 @@ const rows = [
 export default function Appointments() {
   const classes = useStyles();
   const [data, setData] = useState([]);
+  const [isConfirmed, setIsConfirmed] = useState([]);
 
   useEffect(() => {
     axios.get(APPOINTMENTS).then(resp => setData(resp.data));
@@ -41,6 +48,20 @@ export default function Appointments() {
 
   return (
     <Paper className={classes.root}>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={isConfirmed}
+          onChange={e => setIsConfirmed(e.target.value)}
+        >
+          <MenuItem></MenuItem>
+          <MenuItem value={true}>Yes</MenuItem>
+          <MenuItem value={false}>No</MenuItem>
+        </Select>
+      </FormControl>
+
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
