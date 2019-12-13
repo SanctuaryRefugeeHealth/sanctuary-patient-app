@@ -13,7 +13,9 @@ import {
   Select,
   MenuItem,
   Box,
-  TextField
+  TextField,
+  TableSortLabel,
+  Button
 } from "@material-ui/core";
 import { getAppointments } from "../services/appointments";
 import { useHistory } from "react-router-dom";
@@ -29,11 +31,49 @@ const useStyles = makeStyles({
   }
 });
 
+const initHeaders = [
+  {
+    label: "Patient",
+    direction: undefined // desc or asc,
+  },
+  {
+    label: "Phone",
+    direction: undefined // desc or asc,
+  },
+  {
+    label: "Practitioner",
+    direction: undefined // desc or asc,
+  },
+  {
+    label: "Clinic",
+    direction: undefined // desc or asc,
+  },
+  {
+    label: "Address",
+    direction: undefined // desc or asc,
+  },
+  {
+    label: "Date",
+    direction: undefined // desc or asc,
+  },
+  {
+    label: "Confirmed",
+    direction: undefined // desc or asc,
+  }
+];
+
+const getNewDirection = oldDirection => {
+  if (oldDirection === "asc") return "desc";
+  if (oldDirection === "desc") return undefined;
+  return "asc";
+};
+
 export default function Appointments() {
   const classes = useStyles();
   const [rows, setData] = useState([]);
   const [confirmed, setConfirmed] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [headers, setHeaders] = useState(initHeaders);
   const history = useHistory();
   const [filteredRows, setFilteredRows] = useState(rows);
 
@@ -64,6 +104,17 @@ export default function Appointments() {
     );
   }, [searchText, confirmed, rows]);
 
+  const onHeaderClick = i => {
+    setHeaders(prev => [
+      ...prev.slice(0, i),
+      {
+        ...prev[i],
+        direction: getNewDirection(prev[i].direction)
+      },
+      ...prev.slice(i + 1)
+    ]);
+  };
+
   return (
     <>
       <Box p={1} display="flex" justifyContent="space-between">
@@ -86,18 +137,30 @@ export default function Appointments() {
             <MenuItem value="No">No</MenuItem>
           </Select>
         </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => history.push(`/appointments/new`)}
+          className={classes.button}
+        >
+          New Appointment
+        </Button>
       </Box>
 
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Patient</TableCell>
-            <TableCell>Phone</TableCell>
-            <TableCell>Practitioner</TableCell>
-            <TableCell>Clinic</TableCell>
-            <TableCell>Address</TableCell>
-            <TableCell>Date</TableCell>
-            <TableCell>Confirmed</TableCell>
+            {headers.map((header, i) => (
+              <TableCell>
+                <TableSortLabel
+                  direction={header.direction}
+                  active={header.direction}
+                  onClick={() => onHeaderClick(i)}
+                >
+                  {header.label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
