@@ -45,7 +45,9 @@ export default function Appointments() {
       row =>
         !searchText ||
         row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.practitionerName.toLowerCase().includes(searchText.toLowerCase())
+        row.practitionerName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
     )
     .filter(
       row =>
