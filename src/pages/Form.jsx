@@ -5,6 +5,10 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import ContentSwitch from "../components";
+import PatientForm from "./PatientForm";
+import ClinicForm from "./ClinicForm";
+import MessageForm from "./MessageForm";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -94,6 +98,11 @@ const Form = () => {
           </div>
         ) : (
           <div>
+            <ContentSwitch index={index}>
+              <PatientForm />
+              <ClinicForm />
+              <MessageForm />
+            </ContentSwitch>
             <div>
               <Button
                 disabled={activeStep === 0}
@@ -119,7 +128,7 @@ const Form = () => {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1 ? "Send" : "Next"}
               </Button>
             </div>
           </div>
