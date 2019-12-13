@@ -1,7 +1,7 @@
 import React from "react";
 
 const Appointment = () => {
-  return "Hello World";
+  return "Appointment";
 };
 
 export default Appointment;
