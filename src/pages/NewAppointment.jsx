@@ -94,14 +94,8 @@ const NewAppointment = () => {
     }
   ];
 
-  const templates = []; // GET TEMPLATES HERE
-
   var languageOptions = languages.map(function(language) {
     return <MenuItem value={language.id}>{language.name}</MenuItem>
-  });
-
-  var templateOptions = templates.map(function(template) {
-    return <MenuItem value={template.templateId}>{template.templateName}</MenuItem>
   });
 
   return (
