@@ -12,6 +12,10 @@ import { useLocation } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
 
+/*
+ * TODO: use service to fetch data (like pages/Appointment.jsx does)
+ */
+
 const useStyles = makeStyles({
   root: {
     width: "100%",

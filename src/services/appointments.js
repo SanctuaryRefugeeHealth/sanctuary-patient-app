@@ -23,6 +23,8 @@ const data = [
   }
 ];
 
+// TODO: update to use `/appointments`
+
 const getAppointments = () => {
   return new Promise(r => r(data));
 };
@@ -35,14 +37,14 @@ const getAppointmentById = id => {
   return new Promise(r => r(appointment));
 };
 
-const createAppointment = (appointment) => {
+const createAppointment = appointment => {
   const createdAppointment = {
     ...appointment,
     confirmed: false,
     id: Math.floor(Math.random() * 1000).toString()
   };
   return new Promise(r => r(createdAppointment));
-}
+};
 
 const updateAppointmentConfirmed = (id, confirmed = true) => {
   const appointment = data.find(appt => appt.id === id);
@@ -52,8 +54,13 @@ const updateAppointmentConfirmed = (id, confirmed = true) => {
   const updatedAppointment = {
     ...appointment,
     confirmed
-  }
+  };
   return new Promise(r => r(updatedAppointment));
-}
+};
 
-export { getAppointments, getAppointmentById, createAppointment, updateAppointmentConfirmed }
+export {
+  getAppointments,
+  getAppointmentById,
+  createAppointment,
+  updateAppointmentConfirmed
+};
