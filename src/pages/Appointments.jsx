@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import { APPOINTMENTS } from "../constants/apis";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Box,
+  TextField
+} from "@material-ui/core";
+import service from "../services/appointments";
 
 const useStyles = makeStyles({
   root: {
@@ -17,43 +28,79 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];
-
 export default function Appointments() {
   const classes = useStyles();
+  const [rows, setData] = useState([]);
+  const [isConfirmed, setIsConfirmed] = useState("");
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    service().then(resp => setData(resp));
+  }, [setData]);
+
+  const filteredRows = rows
+    .filter(
+      row =>
+        !searchText ||
+        row.patient.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.practitioner.toLowerCase().includes(searchText.toLowerCase())
+    )
+    .filter(
+      row =>
+        !isConfirmed ||
+        (isConfirmed === "Yes" && row.isConfirmed) ||
+        (isConfirmed === "No" && !row.isConfirmed)
+    );
 
   return (
     <Paper className={classes.root}>
+      <Box p={1} display="flex" justifyContent="space-between">
+        <TextField
+          type="search"
+          label="search"
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
+        />
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Confirmed?</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={isConfirmed}
+            onChange={e => setIsConfirmed(e.target.value)}
+            style={{ width: "200px" }}
+          >
+            <MenuItem value="">&nbsp;</MenuItem>
+            <MenuItem value="Yes">Yes</MenuItem>
+            <MenuItem value="No">No</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Patient</TableCell>
-            <TableCell align="right">Practitioner</TableCell>
-            <TableCell align="right">Date</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Patient</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Practitioner</TableCell>
+            <TableCell>Clinic</TableCell>
+            <TableCell>Address</TableCell>
+            {/* <TableCell >Phone</TableCell> */}
+            <TableCell>Address</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Confirmed</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {filteredRows.map(row => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.patient}</TableCell>
+              <TableCell>{row.patientPhone}</TableCell>
+              <TableCell>{row.practitioner}</TableCell>
+              <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>
