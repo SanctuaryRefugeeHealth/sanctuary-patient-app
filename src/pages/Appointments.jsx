@@ -78,7 +78,6 @@ export default function Appointments() {
           </Select>
         </FormControl>
         <Button
-          float="right"
           variant="contained" 
           color="primary" 
           onClick={() => history.push(`/appointments/new`)} 
