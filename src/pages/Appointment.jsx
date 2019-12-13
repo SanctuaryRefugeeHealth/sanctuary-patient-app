@@ -66,7 +66,6 @@ export default function SimpleTabs() {
         >
           <Tab label="Details" {...a11yProps(0)} />
           <Tab label="Messages" {...a11yProps(1)} />
-          <Tab label="New Message" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -74,9 +73,6 @@ export default function SimpleTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Messages />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <NewMessage />
       </TabPanel>
     </div>
   );

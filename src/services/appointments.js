@@ -29,7 +29,6 @@ const getAppointments = () => {
 
 const getAppointmentById = id => {
   const appointment = data.find(appt => appt.id === id);
-  console.log({ appointment });
   if (!appointment) {
     return new Promise(r => r({}));
   }

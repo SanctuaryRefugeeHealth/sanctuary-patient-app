@@ -5,6 +5,10 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
 
@@ -18,6 +22,9 @@ const useStyles = makeStyles({
   },
   replyRow: {
     backgroundColor: "lightGrey"
+  },
+  button: {
+    marginBottom: "8px"
   }
 });
 
@@ -87,38 +94,51 @@ const rows = [...messages, ...replies].sort(function(a, b) {
   return new moment(b.datetime) - new moment(a.datetime);
 });
 
-console.log("rows", rows);
-
 export default function Messages() {
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Sender</TableCell>
-            <TableCell align="right">Body</TableCell>
-            <TableCell align="right">Date/Time</TableCell>
-            <TableCell align="right">Language</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map(row => (
-            <TableRow
-              key={row.name}
-              className={row.isReply ? classes.replyRow : null}
-            >
-              <TableCell component="th" scope="row">
-                {row.sender}
-              </TableCell>
-              <TableCell align="right">{row.body}</TableCell>
-              <TableCell align="right">{row.datetime}</TableCell>
-              <TableCell align="right">{row.lang}</TableCell>
+    <>
+      <Button
+        onClick={() => {
+          const appointmentId = location.pathname.split("/").pop();
+          history.push(`${appointmentId}/messages/new`);
+        }}
+        variant="contained"
+        color="primary"
+        className={classes.button}
+      >
+        New Message
+      </Button>
+      <Paper className={classes.root}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Sender</TableCell>
+              <TableCell align="right">Body</TableCell>
+              <TableCell align="right">Date/Time</TableCell>
+              <TableCell align="right">Language</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {rows.map(row => (
+              <TableRow
+                key={row.name}
+                className={row.isReply ? classes.replyRow : null}
+              >
+                <TableCell component="th" scope="row">
+                  {row.sender}
+                </TableCell>
+                <TableCell align="right">{row.body}</TableCell>
+                <TableCell align="right">{row.datetime}</TableCell>
+                <TableCell align="right">{row.lang}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
+    </>
   );
 }
