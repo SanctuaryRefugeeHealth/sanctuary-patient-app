@@ -212,41 +212,6 @@ const NewAppointment = () => {
                       />
                     </FormControl>
                   </MuiPickersUtilsProvider>
-
-                  <FormControl className={classes.formControl}>
-                    <InputLabel id="template-label">Template</InputLabel>
-                    <Select displayEmpty id="template" labelId="template-label" >
-                      <MenuItem value={0} disabled>
-                        None
-                      </MenuItem>
-                      {templateOptions}
-                      <MenuItem value="1">Template 1</MenuItem>
-                    </Select>
-                  </FormControl>
-
-                  <FormControl className={classes.formControl}>
-                    <FormControlLabel
-                      control={
-                      <Checkbox
-                          id="additional-information"
-                          color="primary"
-                      />
-                      }
-                      label="Additional Information"
-                    />
-                  </FormControl>
-
-                  <FormControl className={classes.formControl}>
-                    <FormControlLabel
-                      control={
-                      <Checkbox
-                          id="interpretor-required"
-                          color="primary"
-                      />
-                      }
-                      label="Interpretor"
-                    />
-                  </FormControl>
                 </div>
               </ContentSwitch>
               <div>
