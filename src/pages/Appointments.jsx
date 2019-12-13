@@ -13,7 +13,8 @@ import {
   Select,
   MenuItem,
   Box,
-  TextField
+  TextField,
+  Button
 } from "@material-ui/core";
 import { getAppointments } from "../services/appointments";
 import { useHistory } from "react-router-dom";
@@ -86,6 +87,14 @@ export default function Appointments() {
             <MenuItem value="No">No</MenuItem>
           </Select>
         </FormControl>
+        <Button
+          variant="contained" 
+          color="primary" 
+          onClick={() => history.push(`/appointments/new`)} 
+          className={classes.button}
+        >
+          New Appointment
+        </Button>
       </Box>
 
       <Table className={classes.table} aria-label="simple table">
