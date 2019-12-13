@@ -40,16 +40,6 @@ const NewAppointment = () => {
   const isStepSkipped = step => skipped.has(step);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date());
-  const [patientName, setPatientName] = React.useState("");
-  const [patientPhone, setPatientPhone] = React.useState("");
-  const [patientLanguage, setPatientLanguage] = React.useState(0);
-  const [clinicName, setClinicName] = React.useState("");
-  const [physicianName, setPhysicianName] = React.useState("");
-  const [clinicAddress, setClinicAddress] = React.useState("");
-  const [clinicPhone, setClinicPhone] = React.useState("");
-  const [template, setTemplate] = React.useState(0);
-  const [moreInfo, setMoreInfo] = React.useState("");
-  const [needInterpretor, setNeedInterpretor] = React.useState();
 
   const handleDateChange = date => {
     setSelectedDate(date);
@@ -72,8 +62,6 @@ const NewAppointment = () => {
 
   const handleSkip = () => {
     if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
       throw new Error("You can't skip a step that isn't optional.");
     }
 
@@ -84,8 +72,6 @@ const NewAppointment = () => {
       return newSkipped;
     });
   };
-
-  const handleReset = () => setActiveStep(0);
 
   const languages = [
     {
@@ -153,16 +139,16 @@ const NewAppointment = () => {
                   <Typography variant="h2" gutterBottom>Patient</Typography>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" value={patientName} />
+                    <Input id="name" />
                   </FormControl>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="phone">Phone Number</InputLabel>
-                    <Input id="phone" aria-describedby="phone-helper-text" value={patientPhone} />
+                    <Input id="phone" aria-describedby="phone-helper-text"  />
                     <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
                   </FormControl>
                   <FormControl className={classes.formControl}>
                     <InputLabel id="language-label">Language</InputLabel>
-                    <Select displayEmpty id="language" labelId="language-label" value={patientLanguage} onChange={setPatientLanguage}>
+                    <Select displayEmpty id="language" labelId="language-label">
                       <MenuItem value={0} disabled>None</MenuItem>
                       {languageOptions}
                     </Select>
@@ -172,22 +158,22 @@ const NewAppointment = () => {
                 <Typography variant="h2" gutterBottom>Clinic</Typography>
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="clinic-name">Clinic Name</InputLabel>
-                        <Input id="clinic-name" value={clinicName} />
+                        <Input id="clinic-name" />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="practitioner-name">Practitioner Name</InputLabel>
-                        <Input id="practitioner-name" value={physicianName} />
+                        <Input id="practitioner-name" />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="address">Address</InputLabel>
-                        <Input id="address" value={clinicAddress} />
+                        <Input id="address" />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="phone">Phone Number</InputLabel>
-                        <Input id="phone" aria-describedby="phone-helper-text" value={clinicPhone} />
+                        <Input id="phone" aria-describedby="phone-helper-text" />
                         <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
                     </FormControl>
                 </div>
@@ -229,10 +215,11 @@ const NewAppointment = () => {
 
                   <FormControl className={classes.formControl}>
                     <InputLabel id="template-label">Template</InputLabel>
-                    <Select displayEmpty id="template" labelId="template-label" value={template} onChange={setTemplate}>
+                    <Select displayEmpty id="template" labelId="template-label" >
                       <MenuItem value={0} disabled>
                         None
                       </MenuItem>
+                      {templateOptions}
                       <MenuItem value="1">Template 1</MenuItem>
                     </Select>
                   </FormControl>
@@ -243,7 +230,6 @@ const NewAppointment = () => {
                       <Checkbox
                           id="additional-information"
                           color="primary"
-                          value={moreInfo}
                       />
                       }
                       label="Additional Information"
@@ -256,7 +242,6 @@ const NewAppointment = () => {
                       <Checkbox
                           id="interpretor-required"
                           color="primary"
-                          value={needInterpretor}
                       />
                       }
                       label="Interpretor"
