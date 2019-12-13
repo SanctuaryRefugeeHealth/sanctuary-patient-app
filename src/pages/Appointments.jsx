@@ -12,7 +12,9 @@ import {
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Box,
+  TextField
 } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -48,19 +50,23 @@ export default function Appointments() {
 
   return (
     <Paper className={classes.root}>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={isConfirmed}
-          onChange={e => setIsConfirmed(e.target.value)}
-        >
-          <MenuItem></MenuItem>
-          <MenuItem value={true}>Yes</MenuItem>
-          <MenuItem value={false}>No</MenuItem>
-        </Select>
-      </FormControl>
+      <Box display="flex" justifyContent="space-between">
+        <TextField type="search" label="search" />
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Confirmed?</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={isConfirmed}
+            onChange={e => setIsConfirmed(e.target.value)}
+            style={{ width: "200px" }}
+          >
+            <MenuItem></MenuItem>
+            <MenuItem value={true}>Yes</MenuItem>
+            <MenuItem value={false}>No</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
