@@ -36,4 +36,25 @@ const getAppointmentById = id => {
   return new Promise(r => r(appointment));
 };
 
-export { getAppointments, getAppointmentById };
+const createAppointment = (appointment) => {
+  const createdAppointment = {
+    ...appointment,
+    confirmed: false,
+    id: Math.floor(Math.random() * 1000).toString()
+  };
+  return new Promise(r => r(createdAppointment));
+}
+
+const updateAppointmentConfirmed = (id, confirmed = true) => {
+  const appointment = data.find(appt => appt.id === id);
+  if (!appointment) {
+    return new Promise(r => r({}));
+  }
+  const updatedAppointment = {
+    ...appointment,
+    confirmed
+  }
+  return new Promise(r => r(updatedAppointment));
+}
+
+export { getAppointments, getAppointmentById, createAppointment, updateAppointmentConfirmed }

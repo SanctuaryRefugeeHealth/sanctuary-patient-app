@@ -35,26 +35,34 @@ export default function Appointments() {
   const [confirmed, setConfirmed] = useState("");
   const [searchText, setSearchText] = useState("");
   const history = useHistory();
+  const [filteredRows, setFilteredRows] = useState(rows);
 
   useEffect(() => {
     getAppointments().then(resp => setData(resp));
   }, [setData]);
 
-  const filteredRows = rows
-    .filter(
-      row =>
-        !searchText ||
-        row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.practitionerName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
-    )
-    .filter(
-      row =>
-        !confirmed ||
-        (confirmed === "Yes" && row.confirmed) ||
-        (confirmed === "No" && !row.confirmed)
+  useEffect(() => {
+    setFilteredRows(
+      rows
+        .filter(
+          row =>
+            !searchText ||
+            row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.patientPhone.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.practitionerName
+              .toLowerCase()
+              .includes(searchText.toLowerCase()) ||
+            row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .filter(
+          row =>
+            !confirmed ||
+            (confirmed === "Yes" && row.confirmed) ||
+            (confirmed === "No" && !row.confirmed)
+        )
     );
+  }, [searchText, confirmed, rows]);
 
   return (
     <>
