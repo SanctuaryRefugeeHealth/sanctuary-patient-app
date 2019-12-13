@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Input, Checkbox, Typography, Stepper, Step, StepLabel, Button, Select, MenuItem, FormControl, InputLabel, FormHelperText, FormControlLabel } from "@material-ui/core";
+import { Input, Link, Checkbox, Typography, Stepper, Step, StepLabel, Button, Select, MenuItem, FormControl, InputLabel, FormHelperText, FormControlLabel } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -42,12 +42,12 @@ const NewAppointment = () => {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [patientName, setPatientName] = React.useState("");
   const [patientPhone, setPatientPhone] = React.useState("");
-  const [patientLanguage, setPatientLanguage] = React.useState("");
+  const [patientLanguage, setPatientLanguage] = React.useState(0);
   const [clinicName, setClinicName] = React.useState("");
   const [physicianName, setPhysicianName] = React.useState("");
   const [clinicAddress, setClinicAddress] = React.useState("");
   const [clinicPhone, setClinicPhone] = React.useState("");
-  const [template, setTemplate] = React.useState("");
+  const [template, setTemplate] = React.useState(0);
   const [moreInfo, setMoreInfo] = React.useState("");
   const [needInterpretor, setNeedInterpretor] = React.useState();
 
@@ -87,16 +87,31 @@ const NewAppointment = () => {
 
   const handleReset = () => setActiveStep(0);
 
-  const languages = {
-    ENGLISH: 1,
-    ARABIC: 2,
-    SPANISH: 3
-  };
+  const languages = [
+    {
+      id: 1,
+      iso: "en",
+      name: "English",
+      direction: "ltr"
+    },
+    {
+      id: 2,
+      iso: "ar",
+      name: "Arabic",
+      direction: "rtl"
+    },
+    {
+      id: 3,
+      iso: "es",
+      name: "Spanish",
+      direction: "ltr"
+    }
+  ];
 
   const templates = []; // GET TEMPLATES HERE
 
-  var languageOptions = Object.keys(languages).map(function(key, value) {
-    return <MenuItem value={value}>{key}</MenuItem>
+  var languageOptions = languages.map(function(language) {
+    return <MenuItem value={language.id}>{language.name}</MenuItem>
   });
 
   var templateOptions = templates.map(function(template) {
@@ -129,12 +144,7 @@ const NewAppointment = () => {
         <div>
           {activeStep === steps.length ? (
             <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Button onClick={handleReset} className={classes.button}>
-                Reset
-              </Button>
+              {window.location = "/appointments"}
             </div>
           ) : (
             <div>
@@ -153,7 +163,7 @@ const NewAppointment = () => {
                   <FormControl className={classes.formControl}>
                     <InputLabel id="language-label">Language</InputLabel>
                     <Select displayEmpty id="language" labelId="language-label" value={patientLanguage} onChange={setPatientLanguage}>
-                      <MenuItem value="" disabled>None</MenuItem>
+                      <MenuItem value={0} disabled>None</MenuItem>
                       {languageOptions}
                     </Select>
                   </FormControl>
@@ -220,7 +230,7 @@ const NewAppointment = () => {
                   <FormControl className={classes.formControl}>
                     <InputLabel id="template-label">Template</InputLabel>
                     <Select displayEmpty id="template" labelId="template-label" value={template} onChange={setTemplate}>
-                      <MenuItem value="" disabled>
+                      <MenuItem value={0} disabled>
                         None
                       </MenuItem>
                       <MenuItem value="1">Template 1</MenuItem>
@@ -255,13 +265,22 @@ const NewAppointment = () => {
                 </div>
               </ContentSwitch>
               <div>
-                <Button
-                  disabled={activeStep === 0}
+              {activeStep === 0 && (
+                  <Link
+                  href="/appointments"
+                  className={classes.button}
+                  >
+                    CANCEL
+                  </Link>
+                )}
+                {activeStep !== 0 && (
+                  <Button
                   onClick={handleBack}
                   className={classes.button}
                 >
                   Back
                 </Button>
+                )}
                 {isStepOptional(activeStep) && (
                   <Button
                     variant="contained"
