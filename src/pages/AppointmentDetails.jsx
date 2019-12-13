@@ -18,34 +18,24 @@ export default () => {
   if (!appointment) return <CircularProgress />;
   return (
     <>
-      <Typography variant="h5" gutterBottom>
-        Patient Name
+      <Typography variant="h5">Patient</Typography>
+      <Typography gutterBottom>{appointment.patientName}</Typography>
+      <Typography variant="h5">Phone</Typography>
+      <Typography gutterBottom>{appointment.patientPhone}</Typography>
+      <Typography variant="h5">Practitioner</Typography>
+      <Typography gutterBottom>{appointment.practitionerName}</Typography>
+      <Typography variant="h5">Clinic</Typography>
+      <Typography gutterBottom>{appointment.clinicName}</Typography>
+      <Typography variant="h5">Address</Typography>
+      <Typography gutterBottom>{appointment.clinicAddress}</Typography>
+      <Typography variant="h5">Date</Typography>
+      <Typography gutterBottom>
+        {moment(appointment.date).format("ll")}
       </Typography>
-      {appointment.patientName}
-      <Typography variant="h5" gutterBottom>
-        Phone
+      <Typography variant="h5">Is Confirmed</Typography>
+      <Typography gutterBottom>
+        {appointment.confirmed ? "Yes" : "No"}
       </Typography>
-      {appointment.patientName}
-      <Typography variant="h5" gutterBottom>
-        Practitioner
-      </Typography>
-      {appointment.patientName}
-      <Typography variant="h5" gutterBottom>
-        Clinic
-      </Typography>
-      {appointment.patientName}
-      <Typography variant="h5" gutterBottom>
-        Address
-      </Typography>
-      {appointment.clinicAddress}
-      <Typography variant="h5" gutterBottom>
-        Date
-      </Typography>
-      {moment(appointment.patientName).format("ll")}
-      <Typography variant="h5" gutterBottom>
-        Is Confirmed
-      </Typography>
-      {appointment.confirmed}
     </>
   );
 };
