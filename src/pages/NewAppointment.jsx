@@ -1,14 +1,13 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import { Input, Checkbox, Typography, Stepper, Step, StepLabel, Button, Select, MenuItem, FormControl, InputLabel, FormHelperText, FormControlLabel } from "@material-ui/core";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker
+} from "@material-ui/pickers";
 import { ContentSwitch } from "../components";
-import PatientForm from "./PatientForm";
-import ClinicForm from "./ClinicForm";
-import AppointmentForm from "./AppointmentForm";
+import MomentUtils from "@date-io/moment";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -17,6 +16,13 @@ const useStyles = makeStyles(theme => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   }
 }));
 
@@ -32,6 +38,12 @@ const NewAppointment = () => {
 
   const isStepOptional = step => step === 3;
   const isStepSkipped = step => skipped.has(step);
+
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
 
   const handleNext = () => {
     let newSkipped = skipped;
@@ -64,6 +76,16 @@ const NewAppointment = () => {
   };
 
   const handleReset = () => setActiveStep(0);
+
+  const languages = {
+    ENGLISH: 1,
+    ARABIC: 2,
+    SPANISH: 3
+  };
+
+  var languageOptions = Object.keys(languages).map(function(key, value) {
+    return <MenuItem value={value}>{key.charAt(0) + key.slice(1).toLowerCase()}</MenuItem>
+  });
 
   return (
     <>
@@ -100,9 +122,124 @@ const NewAppointment = () => {
         ) : (
           <div>
             <ContentSwitch index={activeStep}>
-              <PatientForm />
-              <ClinicForm />
-              <AppointmentForm />
+              <div>
+                <Typography variant="h2" gutterBottom>Patient</Typography>
+                <form id="patientForm" noValidate autoComplete="off">
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="name">Name</InputLabel>
+                    <Input id="name" />
+                  </FormControl>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="phone">Phone Number</InputLabel>
+                    <Input id="phone" aria-describedby="phone-helper-text" />
+                    <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
+                  </FormControl>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="language-label">Language</InputLabel>
+                    <Select displayEmpty id="language" labelId="language-label">
+                      <MenuItem value="" disabled>None</MenuItem>
+                      {languageOptions}
+                    </Select>
+                  </FormControl>
+                </form>
+              </div>
+              <div>
+                <Typography variant="h2" gutterBottom>Clinic</Typography>
+                <form id="clinicForm" noValidate autoComplete="off">
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="clinic-name">Clinic Name</InputLabel>
+                        <Input id="clinic-name" />
+                    </FormControl>
+
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="practitioner-name">Practitioner Name</InputLabel>
+                        <Input id="practitioner-name" />
+                    </FormControl>
+
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="address">Address</InputLabel>
+                        <Input id="address" />
+                    </FormControl>
+
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="phone">Phone Number</InputLabel>
+                        <Input id="phone" aria-describedby="phone-helper-text" />
+                        <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
+                    </FormControl>
+                </form>
+              </div>
+              <div>
+                <Typography variant="h2" gutterBottom>
+                  Appointment
+                </Typography>
+                <form id="appointmentForm">
+                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <FormControl className={classes.formControl}>
+                      <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="MM/DD/YYYY"
+                        margin="normal"
+                        label="Appointment Date"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        id="date"
+                        KeyboardButtonProps={{
+                          "aria-label": "change date"
+                        }}
+                        aria-describedby="date-helper-text"
+                      />
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                      <KeyboardTimePicker
+                        margin="normal"
+                        id="time"
+                        label="Appointment Time"
+                        KeyboardButtonProps={{
+                          "aria-label": "change time"
+                        }}
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        aria-describedby="time-helper-text"
+                      />
+                    </FormControl>
+                  </MuiPickersUtilsProvider>
+
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="template-label">Template</InputLabel>
+                    <Select displayEmpty id="template" labelId="template-label">
+                      <MenuItem value="" disabled>
+                        None
+                      </MenuItem>
+                      <MenuItem value="1">Template 1</MenuItem>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl className={classes.formControl}>
+                      <FormControlLabel
+                          control={
+                          <Checkbox
+                              id="additional-information"
+                              color="primary"
+                          />
+                          }
+                          label="Additional Information"
+                      />
+                  </FormControl>
+
+                  <FormControl className={classes.formControl}>
+                  <FormControlLabel
+                          control={
+                          <Checkbox
+                              id="interpretor-required"
+                              color="primary"
+                          />
+                          }
+                          label="Interpretor"
+                      />
+                  </FormControl>
+                </form>
+              </div>
             </ContentSwitch>
             <div>
               <Button
