@@ -13,8 +13,9 @@ const data = [
   }
 ];
 
+// TODO: update to use /languages
 const getLanguages = () => {
   return new Promise(r => r(data));
-}
+};
 
 export { getLanguages };
