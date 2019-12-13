@@ -8,7 +8,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper,
   FormControl,
   InputLabel,
   Select,
@@ -53,7 +52,7 @@ export default function Appointments() {
     );
 
   return (
-    <Paper className={classes.root}>
+    <>
       <Box p={1} display="flex" justifyContent="space-between">
         <TextField
           type="search"
@@ -104,6 +103,6 @@ export default function Appointments() {
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </>
   );
 }
