@@ -61,11 +61,10 @@ export default function Appointments() {
           value={searchText}
           onChange={e => setSearchText(e.target.value)}
         />
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Confirmed?</InputLabel>
+        <FormControl>
+          <InputLabel id="confirmed">Confirmed?</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="confirmed"
             value={isConfirmed}
             onChange={e => setIsConfirmed(e.target.value)}
             style={{ width: "200px" }}
