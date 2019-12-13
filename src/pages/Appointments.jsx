@@ -117,20 +117,21 @@ export default function Appointments() {
 
   return (
     <>
-      <Box p={1} display="flex" justifyContent="space-between">
+      <Box p={1} display="flex">
         <TextField
           type="search"
           label="search"
           value={searchText}
           onChange={e => setSearchText(e.target.value)}
+          style={{ width: 300 }}
         />
-        <FormControl>
+        <FormControl style={{ marginLeft: "auto" }}>
           <InputLabel id="confirmed">Confirmed?</InputLabel>
           <Select
             labelId="confirmed"
             value={confirmed}
             onChange={e => setConfirmed(e.target.value)}
-            style={{ width: "200px" }}
+            style={{ width: "200px", marginRight: 10 }}
           >
             <MenuItem value="">&nbsp;</MenuItem>
             <MenuItem value="Yes">Yes</MenuItem>
@@ -141,7 +142,6 @@ export default function Appointments() {
           variant="contained"
           color="primary"
           onClick={() => history.push(`/appointments/new`)}
-          className={classes.button}
         >
           New Appointment
         </Button>
