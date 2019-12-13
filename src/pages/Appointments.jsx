@@ -15,7 +15,9 @@ import {
   Box,
   TextField
 } from "@material-ui/core";
-import service from "../services/appointments";
+import { getAppointments } from "../services/appointments";
+import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 const useStyles = makeStyles({
   root: {
@@ -30,25 +32,28 @@ const useStyles = makeStyles({
 export default function Appointments() {
   const classes = useStyles();
   const [rows, setData] = useState([]);
-  const [isConfirmed, setIsConfirmed] = useState("");
+  const [confirmed, setConfirmed] = useState("");
   const [searchText, setSearchText] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
-    service().then(resp => setData(resp));
+    getAppointments().then(resp => setData(resp));
   }, [setData]);
 
   const filteredRows = rows
     .filter(
       row =>
         !searchText ||
-        row.patient.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.practitioner.toLowerCase().includes(searchText.toLowerCase())
+        row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.practitionerName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
     )
     .filter(
       row =>
-        !isConfirmed ||
-        (isConfirmed === "Yes" && row.isConfirmed) ||
-        (isConfirmed === "No" && !row.isConfirmed)
+        !confirmed ||
+        (confirmed === "Yes" && row.confirmed) ||
+        (confirmed === "No" && !row.confirmed)
     );
 
   return (
@@ -64,8 +69,8 @@ export default function Appointments() {
           <InputLabel id="confirmed">Confirmed?</InputLabel>
           <Select
             labelId="confirmed"
-            value={isConfirmed}
-            onChange={e => setIsConfirmed(e.target.value)}
+            value={confirmed}
+            onChange={e => setConfirmed(e.target.value)}
             style={{ width: "200px" }}
           >
             <MenuItem value="">&nbsp;</MenuItem>
@@ -83,22 +88,26 @@ export default function Appointments() {
             <TableCell>Practitioner</TableCell>
             <TableCell>Clinic</TableCell>
             <TableCell>Address</TableCell>
-            {/* <TableCell >Phone</TableCell> */}
-            <TableCell>Address</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Confirmed</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {filteredRows.map(row => (
-            <TableRow key={row.name}>
+            <TableRow
+              key={row.name}
+              hover
+              onClick={() => history.push(`/appointments/${row.id}`)}
+            >
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.patientName}
               </TableCell>
-              <TableCell>{row.patient}</TableCell>
-              <TableCell>{row.practitioner}</TableCell>
               <TableCell>{row.patientPhone}</TableCell>
-              <TableCell>{row.protein}</TableCell>
+              <TableCell>{row.practitionerName}</TableCell>
+              <TableCell>{row.clinicName}</TableCell>
+              <TableCell>{row.clinicAddress}</TableCell>
+              <TableCell>{moment(row.date).format("ll")}</TableCell>
+              <TableCell>{row.confirmed ? "Yes" : "No"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
