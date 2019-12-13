@@ -132,17 +132,17 @@ const NewAppointment = () => {
                 <div>
                   <Typography variant="h2" gutterBottom>Patient</Typography>
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" />
+                    <InputLabel htmlFor="name" required>Name</InputLabel>
+                    <Input id="name" required />
                   </FormControl>
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="phone">Phone Number</InputLabel>
-                    <Input id="phone" aria-describedby="phone-helper-text"  />
+                    <InputLabel htmlFor="phone" required>Phone Number</InputLabel>
+                    <Input id="phone" aria-describedby="phone-helper-text" required />
                     <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
                   </FormControl>
                   <FormControl className={classes.formControl}>
-                    <InputLabel id="language-label">Language</InputLabel>
-                    <Select displayEmpty id="language" labelId="language-label">
+                    <InputLabel id="language-label" required>Language</InputLabel>
+                    <Select displayEmpty id="language" labelId="language-label" required >
                       <MenuItem value={0} disabled>None</MenuItem>
                       {languageOptions}
                     </Select>
@@ -151,23 +151,23 @@ const NewAppointment = () => {
                 <div>
                 <Typography variant="h2" gutterBottom>Clinic</Typography>
                     <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="clinic-name">Clinic Name</InputLabel>
-                        <Input id="clinic-name" />
+                        <InputLabel htmlFor="clinic-name" required>Clinic Name</InputLabel>
+                        <Input id="clinic-name" required />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="practitioner-name">Practitioner Name</InputLabel>
-                        <Input id="practitioner-name" />
+                        <InputLabel htmlFor="practitioner-name" required>Practitioner Name</InputLabel>
+                        <Input id="practitioner-name" required />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="address">Address</InputLabel>
-                        <Input id="address" />
+                        <InputLabel htmlFor="address" required>Address</InputLabel>
+                        <Input id="address" required />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="phone">Phone Number</InputLabel>
-                        <Input id="phone" aria-describedby="phone-helper-text" />
+                        <InputLabel htmlFor="phone" required>Phone Number</InputLabel>
+                        <Input id="phone" aria-describedby="phone-helper-text" required />
                         <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
                     </FormControl>
                 </div>
@@ -190,6 +190,7 @@ const NewAppointment = () => {
                           "aria-label": "change date"
                         }}
                         aria-describedby="date-helper-text"
+                        required
                       />
                     </FormControl>
                     <FormControl className={classes.formControl}>
@@ -203,6 +204,7 @@ const NewAppointment = () => {
                         value={selectedDate}
                         onChange={handleDateChange}
                         aria-describedby="time-helper-text"
+                        required
                       />
                     </FormControl>
                   </MuiPickersUtilsProvider>
@@ -253,6 +255,7 @@ const NewAppointment = () => {
                   onClick={handleNext}
                   className={classes.button}
                   type="submit"
+                  form="new-appointment-form"
                   >
                   Create Appointment
                 </Button>
