@@ -40,6 +40,16 @@ const NewAppointment = () => {
   const isStepSkipped = step => skipped.has(step);
 
   const [selectedDate, setSelectedDate] = React.useState(new Date());
+  const [patientName, setPatientName] = React.useState("");
+  const [patientPhone, setPatientPhone] = React.useState("");
+  const [patientLanguage, setPatientLanguage] = React.useState("");
+  const [clinicName, setClinicName] = React.useState("");
+  const [physicianName, setPhysicianName] = React.useState("");
+  const [clinicAddress, setClinicAddress] = React.useState("");
+  const [clinicPhone, setClinicPhone] = React.useState("");
+  const [template, setTemplate] = React.useState("");
+  const [moreInfo, setMoreInfo] = React.useState("");
+  const [needInterpretor, setNeedInterpretor] = React.useState();
 
   const handleDateChange = date => {
     setSelectedDate(date);
@@ -83,96 +93,98 @@ const NewAppointment = () => {
     SPANISH: 3
   };
 
+  const templates = []; // GET TEMPLATES HERE
+
   var languageOptions = Object.keys(languages).map(function(key, value) {
-    return <MenuItem value={value}>{key.charAt(0) + key.slice(1).toLowerCase()}</MenuItem>
+    return <MenuItem value={value}>{key}</MenuItem>
+  });
+
+  var templateOptions = templates.map(function(template) {
+    return <MenuItem value={template.templateId}>{template.templateName}</MenuItem>
   });
 
   return (
     <>
       <Typography variant="h1" gutterBottom>Create an Appointment</Typography>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
+      <form id="new-appointment-form" noValidate autoComplete="off">
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            if (isStepOptional(index)) {
+              labelProps.optional = (
+                <Typography variant="caption">Optional</Typography>
+              );
+            }
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
             );
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <ContentSwitch index={activeStep}>
-              <div>
-                <Typography variant="h2" gutterBottom>Patient</Typography>
-                <form id="patientForm" noValidate autoComplete="off">
+          })}
+        </Stepper>
+        <div>
+          {activeStep === steps.length ? (
+            <div>
+              <Typography className={classes.instructions}>
+                All steps completed - you&apos;re finished
+              </Typography>
+              <Button onClick={handleReset} className={classes.button}>
+                Reset
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <ContentSwitch index={activeStep}>
+                <div>
+                  <Typography variant="h2" gutterBottom>Patient</Typography>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="name">Name</InputLabel>
-                    <Input id="name" />
+                    <Input id="name" value={patientName} />
                   </FormControl>
                   <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="phone">Phone Number</InputLabel>
-                    <Input id="phone" aria-describedby="phone-helper-text" />
+                    <Input id="phone" aria-describedby="phone-helper-text" value={patientPhone} />
                     <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
                   </FormControl>
                   <FormControl className={classes.formControl}>
                     <InputLabel id="language-label">Language</InputLabel>
-                    <Select displayEmpty id="language" labelId="language-label">
+                    <Select displayEmpty id="language" labelId="language-label" value={patientLanguage} onChange={setPatientLanguage}>
                       <MenuItem value="" disabled>None</MenuItem>
                       {languageOptions}
                     </Select>
                   </FormControl>
-                </form>
-              </div>
-              <div>
+                </div>
+                <div>
                 <Typography variant="h2" gutterBottom>Clinic</Typography>
-                <form id="clinicForm" noValidate autoComplete="off">
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="clinic-name">Clinic Name</InputLabel>
-                        <Input id="clinic-name" />
+                        <Input id="clinic-name" value={clinicName} />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="practitioner-name">Practitioner Name</InputLabel>
-                        <Input id="practitioner-name" />
+                        <Input id="practitioner-name" value={physicianName} />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="address">Address</InputLabel>
-                        <Input id="address" />
+                        <Input id="address" value={clinicAddress} />
                     </FormControl>
 
                     <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="phone">Phone Number</InputLabel>
-                        <Input id="phone" aria-describedby="phone-helper-text" />
+                        <Input id="phone" aria-describedby="phone-helper-text" value={clinicPhone} />
                         <FormHelperText id="phone-helper-text">In the format 123-123-1234</FormHelperText>
                     </FormControl>
-                </form>
-              </div>
-              <div>
-                <Typography variant="h2" gutterBottom>
-                  Appointment
-                </Typography>
-                <form id="appointmentForm">
+                </div>
+                <div>
+                  <Typography variant="h2" gutterBottom>
+                    Appointment
+                  </Typography>
                   <MuiPickersUtilsProvider utils={MomentUtils}>
                     <FormControl className={classes.formControl}>
                       <KeyboardDatePicker
@@ -207,7 +219,7 @@ const NewAppointment = () => {
 
                   <FormControl className={classes.formControl}>
                     <InputLabel id="template-label">Template</InputLabel>
-                    <Select displayEmpty id="template" labelId="template-label">
+                    <Select displayEmpty id="template" labelId="template-label" value={template} onChange={setTemplate}>
                       <MenuItem value="" disabled>
                         None
                       </MenuItem>
@@ -216,64 +228,77 @@ const NewAppointment = () => {
                   </FormControl>
 
                   <FormControl className={classes.formControl}>
-                      <FormControlLabel
-                          control={
-                          <Checkbox
-                              id="additional-information"
-                              color="primary"
-                          />
-                          }
-                          label="Additional Information"
+                    <FormControlLabel
+                      control={
+                      <Checkbox
+                          id="additional-information"
+                          color="primary"
+                          value={moreInfo}
                       />
+                      }
+                      label="Additional Information"
+                    />
                   </FormControl>
 
                   <FormControl className={classes.formControl}>
-                  <FormControlLabel
-                          control={
-                          <Checkbox
-                              id="interpretor-required"
-                              color="primary"
-                          />
-                          }
-                          label="Interpretor"
+                    <FormControlLabel
+                      control={
+                      <Checkbox
+                          id="interpretor-required"
+                          color="primary"
+                          value={needInterpretor}
                       />
+                      }
+                      label="Interpretor"
+                    />
                   </FormControl>
-                </form>
-              </div>
-            </ContentSwitch>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.button}
-              >
-                Back
-              </Button>
-              {isStepOptional(activeStep) && (
+                </div>
+              </ContentSwitch>
+              <div>
                 <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
                   className={classes.button}
                 >
-                  Skip
+                  Back
                 </Button>
-              )}
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-                type="submit"
-                form={activeStep}
-              >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
+                {isStepOptional(activeStep) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSkip}
+                    className={classes.button}
+                  >
+                    Skip
+                  </Button>
+                )}
+                {activeStep !== steps.length - 1 && (
+                  <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.button}
+                  type="button"
+                  >
+                  Next
+                </Button>
+                )}
+                {activeStep === steps.length - 1 && (
+                  <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.button}
+                  type="submit"
+                  >
+                  Create Appointment
+                </Button>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      </form>
     </>
   );
 };
