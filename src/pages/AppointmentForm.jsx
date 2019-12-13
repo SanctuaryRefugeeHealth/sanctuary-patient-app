@@ -6,7 +6,8 @@ import {
   MenuItem,
   Checkbox,
   FormControl,
-  InputLabel
+  InputLabel,
+  FormControlLabel
 } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
@@ -82,17 +83,27 @@ const AppointmentForm = () => {
         </FormControl>
 
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="additional-info">
-            Additional Information
-          </InputLabel>
-          <Checkbox id="additional-info" />
+            <FormControlLabel
+                control={
+                <Checkbox
+                    id="additional-information"
+                    color="primary"
+                />
+                }
+                label="Additional Information"
+            />
         </FormControl>
 
         <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="interpretor-required">
-            Ask About Interpretor
-          </InputLabel>
-          <Checkbox id="interpretor-required" />
+        <FormControlLabel
+                control={
+                <Checkbox
+                    id="interpretor-required"
+                    color="primary"
+                />
+                }
+                label="Interpretor"
+            />
         </FormControl>
       </form>
     </div>
