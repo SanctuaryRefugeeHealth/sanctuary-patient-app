@@ -8,12 +8,14 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper,
   FormControl,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  Box,
+  TextField
 } from "@material-ui/core";
+import service from "../services/appointments";
 
 const useStyles = makeStyles({
   root: {
@@ -25,42 +27,53 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];
-
 export default function Appointments() {
   const classes = useStyles();
-  const [data, setData] = useState([]);
-  const [isConfirmed, setIsConfirmed] = useState([]);
+  const [rows, setData] = useState([]);
+  const [isConfirmed, setIsConfirmed] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    axios.get(APPOINTMENTS).then(resp => setData(resp.data));
+    service().then(resp => setData(resp));
   }, [setData]);
 
+  const filteredRows = rows
+    .filter(
+      row =>
+        !searchText ||
+        row.patient.toLowerCase().includes(searchText.toLowerCase()) ||
+        row.practitioner.toLowerCase().includes(searchText.toLowerCase())
+    )
+    .filter(
+      row =>
+        !isConfirmed ||
+        (isConfirmed === "Yes" && row.isConfirmed) ||
+        (isConfirmed === "No" && !row.isConfirmed)
+    );
+
   return (
-    <Paper className={classes.root}>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={isConfirmed}
-          onChange={e => setIsConfirmed(e.target.value)}
-        >
-          <MenuItem></MenuItem>
-          <MenuItem value={true}>Yes</MenuItem>
-          <MenuItem value={false}>No</MenuItem>
-        </Select>
-      </FormControl>
+    <>
+      <Box p={1} display="flex" justifyContent="space-between">
+        <TextField
+          type="search"
+          label="search"
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
+        />
+        <FormControl>
+          <InputLabel id="confirmed">Confirmed?</InputLabel>
+          <Select
+            labelId="confirmed"
+            value={isConfirmed}
+            onChange={e => setIsConfirmed(e.target.value)}
+            style={{ width: "200px" }}
+          >
+            <MenuItem value="">&nbsp;</MenuItem>
+            <MenuItem value="Yes">Yes</MenuItem>
+            <MenuItem value="No">No</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -77,19 +90,19 @@ export default function Appointments() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
+          {filteredRows.map(row => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell>{row.calories}</TableCell>
-              <TableCell>{row.fat}</TableCell>
-              <TableCell>{row.carbs}</TableCell>
+              <TableCell>{row.patient}</TableCell>
+              <TableCell>{row.practitioner}</TableCell>
+              <TableCell>{row.patientPhone}</TableCell>
               <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </>
   );
 }
