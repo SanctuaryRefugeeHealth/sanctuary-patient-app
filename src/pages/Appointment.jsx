@@ -6,10 +6,12 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-
+import Button from "@material-ui/core/Button";
 import AppointmentDetails from "./AppointmentDetails";
 import Messages from "./Messages";
 import NewMessage from "./NewMessage";
+import links from "../constants/links";
+import { useHistory } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,6 +51,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SimpleTabs() {
+  const history = useHistory();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -59,14 +62,22 @@ export default function SimpleTabs() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-        >
-          <Tab label="Details" {...a11yProps(0)} />
-          <Tab label="Messages" {...a11yProps(1)} />
-        </Tabs>
+        <Box display="flex" justifyContent="space-between">
+          <Button
+            style={{ color: "white", marginRight: 10 }}
+            onClick={() => history.push(links.appointments)}
+          >
+            {"< "}Back to Appointments
+          </Button>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="simple tabs example"
+          >
+            <Tab label="Details" {...a11yProps(0)} />
+            <Tab label="Messages" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
       </AppBar>
       <TabPanel value={value} index={0}>
         <AppointmentDetails />
