@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
+import { APPOINTMENTS } from "./constants/apis";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -31,17 +33,26 @@ const rows = [
 
 export default function Appointments() {
   const classes = useStyles();
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios.get(APPOINTMENTS).then(resp => setData(resp.data));
+  }, [setData]);
 
   return (
     <Paper className={classes.root}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Patient</TableCell>
-            <TableCell align="right">Practitioner</TableCell>
-            <TableCell align="right">Date</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Patient</TableCell>
+            <TableCell>Phone</TableCell>
+            <TableCell>Practitioner</TableCell>
+            <TableCell>Clinic</TableCell>
+            <TableCell>Address</TableCell>
+            {/* <TableCell >Phone</TableCell> */}
+            <TableCell>Address</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Confirmed</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -50,10 +61,10 @@ export default function Appointments() {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell>{row.calories}</TableCell>
+              <TableCell>{row.fat}</TableCell>
+              <TableCell>{row.carbs}</TableCell>
+              <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>
