@@ -20,12 +20,12 @@ const App = () => {
     <MuiThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route path={links.appointments} component={Appointments} />
-          <Route path={links.appointments_id} component={Appointment} />
           <Route path={links.appointments_new} component={NewAppointment} />
-          <Route path={links.messages} component={Messages} />
-          <Route path={links.messages_id} component={Message} />
+          <Route path={links.appointments_id} component={Appointment} />
+          <Route path={links.appointments} component={Appointments} />
           <Route path={links.messages_new} component={NewMessage} />
+          <Route path={links.messages_id} component={Message} />
+          <Route path={links.messages} component={Messages} />
           <Redirect to={links.appointments} />
         </Switch>
       </Router>

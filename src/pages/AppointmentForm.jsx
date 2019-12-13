@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 
-const MessageForm = () => {
+const AppointmentForm = () => {
     return (
         <div>
             <Typography>Message</Typography>
@@ -9,4 +9,4 @@ const MessageForm = () => {
     );
 }
 
-export default MessageForm;
+export default AppointmentForm;
