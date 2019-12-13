@@ -6,6 +6,11 @@ const theme = createMuiTheme({
       root: {
         backgroundColor: "cadetBlue"
       }
+    },
+    MuiTableRow: {
+      hover: {
+        cursor: "pointer"
+      }
     }
   }
 });
