@@ -14,7 +14,7 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker
 } from "@material-ui/pickers";
-import MomentUtils from "moment";
+import MomentUtils from "@date-io/moment";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
