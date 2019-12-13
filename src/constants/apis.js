@@ -1,4 +1,4 @@
-const base = "localhost:5000";
+const base = "http://localhost:8080/api";
 
 const APPOINTMENTS = `${base}/appointments`;
 const APPOINTMENTS_ID = id => `${base}/appointments/${id}`;
