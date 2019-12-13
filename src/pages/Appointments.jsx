@@ -8,7 +8,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Paper,
   FormControl,
   InputLabel,
   Select,
@@ -53,7 +52,7 @@ export default function Appointments() {
     );
 
   return (
-    <Paper className={classes.root}>
+    <>
       <Box p={1} display="flex" justifyContent="space-between">
         <TextField
           type="search"
@@ -61,11 +60,10 @@ export default function Appointments() {
           value={searchText}
           onChange={e => setSearchText(e.target.value)}
         />
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Confirmed?</InputLabel>
+        <FormControl>
+          <InputLabel id="confirmed">Confirmed?</InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="confirmed"
             value={isConfirmed}
             onChange={e => setIsConfirmed(e.target.value)}
             style={{ width: "200px" }}
@@ -98,13 +96,13 @@ export default function Appointments() {
                 {row.name}
               </TableCell>
               <TableCell>{row.patient}</TableCell>
-              <TableCell>{row.patientPhone}</TableCell>
               <TableCell>{row.practitioner}</TableCell>
+              <TableCell>{row.patientPhone}</TableCell>
               <TableCell>{row.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-    </Paper>
+    </>
   );
 }
