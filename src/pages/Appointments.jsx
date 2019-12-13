@@ -50,7 +50,7 @@ export default function Appointments() {
 
   return (
     <Paper className={classes.root}>
-      <Box display="flex" justifyContent="space-between">
+      <Box p={1} display="flex" justifyContent="space-between">
         <TextField type="search" label="search" />
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-simple-select-label">Confirmed?</InputLabel>
@@ -61,7 +61,7 @@ export default function Appointments() {
             onChange={e => setIsConfirmed(e.target.value)}
             style={{ width: "200px" }}
           >
-            <MenuItem></MenuItem>
+            <MenuItem>&nbsp;</MenuItem>
             <MenuItem value={true}>Yes</MenuItem>
             <MenuItem value={false}>No</MenuItem>
           </Select>
