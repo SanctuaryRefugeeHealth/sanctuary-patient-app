@@ -1,5 +1,6 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
+import {Input, Select, MenuItem} from "@material-ui/core";
 import { Form, Field } from 'react-final-form';
 import { FormTextField, FormSelect } from '../components';
 
@@ -10,7 +11,7 @@ const languages = {
 };
 
 var languageOptions = Object.keys(languages).map(function(key, value) {
-  return <option value={value}>{key.charAt(0) + key.slice(1).toLowerCase()}</option>
+  return <MenuItem value={value}>{key.charAt(0) + key.slice(1).toLowerCase()}</MenuItem>
 });
 
 const PatientForm = () => {
@@ -18,11 +19,14 @@ const PatientForm = () => {
     <div>
       <Typography variant="h2" gutterBottom>Patient</Typography>
       <form id="patientForm">
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Phone Number" />
-        <select>
+        <Input type="text" placeholder="Name" />
+        <Input type="text" placeholder="Phone Number" />
+        <Select displayEmpty>
+          <MenuItem value="" disabled>
+            <em>None</em>
+          </MenuItem>
           {languageOptions}
-        </select>
+        </Select>
       </form>
     </div>
   );
