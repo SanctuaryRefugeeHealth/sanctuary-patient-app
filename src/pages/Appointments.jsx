@@ -35,24 +35,34 @@ export default function Appointments() {
   const [isConfirmed, setIsConfirmed] = useState("");
   const [searchText, setSearchText] = useState("");
   const history = useHistory();
+  const [filteredRows, setFilteredRows] = useState(rows);
 
   useEffect(() => {
     getAppointments().then(resp => setData(resp));
   }, [setData]);
 
-  const filteredRows = rows
-    .filter(
-      row =>
-        !searchText ||
-        row.patient.toLowerCase().includes(searchText.toLowerCase()) ||
-        row.practitioner.toLowerCase().includes(searchText.toLowerCase())
-    )
-    .filter(
-      row =>
-        !isConfirmed ||
-        (isConfirmed === "Yes" && row.isConfirmed) ||
-        (isConfirmed === "No" && !row.isConfirmed)
+  useEffect(() => {
+    setFilteredRows(
+      rows
+        .filter(
+          row =>
+            !searchText ||
+            row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.patientPhone.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.practitionerName
+              .toLowerCase()
+              .includes(searchText.toLowerCase()) ||
+            row.clinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.clinicAddress.toLowerCase().includes(searchText.toLowerCase())
+        )
+        .filter(
+          row =>
+            !isConfirmed ||
+            (isConfirmed === "Yes" && row.isConfirmed) ||
+            (isConfirmed === "No" && !row.isConfirmed)
+        )
     );
+  }, [searchText, isConfirmed, rows]);
 
   return (
     <>
