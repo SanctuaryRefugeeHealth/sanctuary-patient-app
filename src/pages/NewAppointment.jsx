@@ -66,7 +66,8 @@ const NewAppointment = () => {
   const handleReset = () => setActiveStep(0);
 
   return (
-    <div>
+    <>
+      <Typography variant="h1" gutterBottom>Create an Appointment</Typography>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -127,6 +128,8 @@ const NewAppointment = () => {
                 color="primary"
                 onClick={handleNext}
                 className={classes.button}
+                type="submit"
+                form={activeStep}
               >
                 {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
@@ -134,7 +137,7 @@ const NewAppointment = () => {
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
