@@ -95,9 +95,6 @@ const Form = () => {
         ) : (
           <div>
             <div>
-              <Typography>Test</Typography>
-            </div>
-            <div>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
