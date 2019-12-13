@@ -1,12 +1,14 @@
 import React from "react";
 import { Button, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { getTemplates, getLanguages } from '../services';
+import { getTemplates, getLanguages, getAppointmentById } from '../services';
 
 
 class NewMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isSent: false,
+      appointment: null,
       languages: [],
       templates: [],
       message: {
@@ -19,7 +21,9 @@ class NewMessage extends React.Component {
   async componentDidMount() {
     const languages = await getLanguages();
     const templates = await getTemplates();
+    const appointment = await getAppointmentById('1');
     this.setState({
+      appointment,
       languages,
       templates,
       message: {
@@ -40,20 +44,33 @@ class NewMessage extends React.Component {
   }
 
   displayMessage() {
-    const { templates, message } = this.state;
-    return templates.find(tpl => tpl.templateId === message.templateId)[message.languageId];
+    const { templates, message, appointment } = this.state;
+    let messageBody = "";
+    messageBody = templates.find(tpl => tpl.templateId === message.templateId)[message.languageId];
+    messageBody = messageBody.replace('${patient}', appointment.patientName);
+    messageBody = messageBody.replace('${practitioner}', appointment.practitionerName);
+    messageBody = messageBody.replace('${date}', appointment.date);
+    messageBody = messageBody.replace('${clinic}', appointment.clinicName + ', ' + appointment.clinicAddress);
+    return messageBody;
   }
 
   createNewMessage = (e) => {
     e.preventDefault();
-    console.log('Submitted?')
+    this.setState({
+      isSent: true
+    })
   }
 
   render() {
-    const { message, languages, templates } = this.state;
+    const { isSent, appointment, message, languages, templates } = this.state;
+    if (isSent) return (
+      <div>
+        <p style={{ fontWeight: 'bold', fontSize: '2rem', color: 'darkGreen', padding: '1.5rem' }}>Message Sent!</p>
+      </div>
+    )
     return <div>
       <form onSubmit={this.createNewMessage} style={{ padding: '1.5rem' }}>
-        <div style={{ marginBottom: '1.5rem' }}>
+        <div style={{ margin: '1.5rem 0' }}>
           <InputLabel id="language">Language</InputLabel>
           <Select labelId="language" name="languageId" value={message.languageId} onChange={this.updateSelect}>
             {languages.map(lang => (
@@ -69,7 +86,7 @@ class NewMessage extends React.Component {
             ))}
           </Select>
         </div>
-        {message.templateId && message.languageId && (
+        {message.templateId && message.languageId && appointment && (
           <div style={{ border: 'solid 1px #ccc', padding: '1rem', marginBottom: '1.5rem' }}>
             {this.displayMessage()}
           </div>
