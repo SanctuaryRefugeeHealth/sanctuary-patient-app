@@ -7,7 +7,8 @@ class NewMessage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      appointment: {},
+      isSent: false,
+      appointment: null,
       languages: [],
       templates: [],
       message: {
@@ -55,11 +56,18 @@ class NewMessage extends React.Component {
 
   createNewMessage = (e) => {
     e.preventDefault();
-    console.log('Submitted?');
+    this.setState({
+      isSent: true
+    })
   }
 
   render() {
-    const { appointment, message, languages, templates } = this.state;
+    const { isSent, appointment, message, languages, templates } = this.state;
+    if (isSent) return (
+      <div>
+        <p style={{ fontWeight: 'bold', fontSize: '2rem', color: 'darkGreen', padding: '1.5rem' }}>Message Sent!</p>
+      </div>
+    )
     return <div>
       <form onSubmit={this.createNewMessage} style={{ padding: '1.5rem' }}>
         <div style={{ margin: '1.5rem 0' }}>
@@ -78,7 +86,7 @@ class NewMessage extends React.Component {
             ))}
           </Select>
         </div>
-        {message.templateId && message.languageId && (
+        {message.templateId && message.languageId && appointment && (
           <div style={{ border: 'solid 1px #ccc', padding: '1rem', marginBottom: '1.5rem' }}>
             {this.displayMessage()}
           </div>
