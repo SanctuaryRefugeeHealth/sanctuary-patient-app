@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Select campaign settings", "Create an ad group", "Create an ad"];
+  return ["Patient Information", "Clinic Information", "Send a Message"];
 }
 
 const Form = () => {
@@ -26,7 +26,7 @@ const Form = () => {
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
-  const isStepOptional = step => step === 1;
+  const isStepOptional = step => step === 3;
   const isStepSkipped = step => skipped.has(step);
 
   const handleNext = () => {
@@ -94,6 +94,9 @@ const Form = () => {
           </div>
         ) : (
           <div>
+            <div>
+              <Typography>Test</Typography>
+            </div>
             <div>
               <Button
                 disabled={activeStep === 0}
