@@ -25,14 +25,15 @@ const data = [
 
 const getAppointments = () => {
   return new Promise(r => r(data));
-}
+};
 
-const getAppointmentById = (id) => {
-  const appointment = getAppointments().find(appt => appt.id === id);
+const getAppointmentById = id => {
+  const appointment = data.find(appt => appt.id === id);
+  console.log({ appointment });
   if (!appointment) {
     return new Promise(r => r({}));
   }
   return new Promise(r => r(appointment));
-}
+};
 
-export { getAppointments, getAppointmentById }
+export { getAppointments, getAppointmentById };
