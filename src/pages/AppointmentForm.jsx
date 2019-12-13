@@ -6,8 +6,7 @@ import {
   MenuItem,
   Checkbox,
   FormControl,
-  InputLabel,
-  FormHelperText
+  InputLabel
 } from "@material-ui/core";
 import {
   MuiPickersUtilsProvider,
@@ -28,44 +27,47 @@ const useStyles = makeStyles(theme => ({
 
 const AppointmentForm = () => {
   const classes = useStyles();
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = date => {
+    setSelectedDate(date);
+  };
 
   return (
     <div>
       <Typography variant="h2" gutterBottom>
-        Message
+        Appointment
       </Typography>
       <form id="appointmentForm">
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="date">Appointment Date</InputLabel>
             <KeyboardDatePicker
               disableToolbar
               variant="inline"
-              format="MM/dd/yyyy"
+              format="MM/DD/YYYY"
               margin="normal"
+              label="Appointment Date"
+              value={selectedDate}
+              onChange={handleDateChange}
               id="date"
               KeyboardButtonProps={{
                 "aria-label": "change date"
               }}
               aria-describedby="date-helper-text"
             />
-            <FormHelperText id="date-helper-text">
-              In the format MM/dd/yyyy
-            </FormHelperText>
           </FormControl>
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="date">Appointment Time</InputLabel>
             <KeyboardTimePicker
               margin="normal"
               id="time"
+              label="Appointment Time"
               KeyboardButtonProps={{
                 "aria-label": "change time"
               }}
+              value={selectedDate}
+              onChange={handleDateChange}
               aria-describedby="time-helper-text"
             />
-            <FormHelperText id="time-helper-text">
-              In the format HH:mm AP
-            </FormHelperText>
           </FormControl>
         </MuiPickersUtilsProvider>
 
