@@ -20,17 +20,15 @@ const App = () => {
     <MuiThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route
-            exact
-            path={links.appointments_new}
-            component={NewAppointment}
-          />
+          <Route exact path={links.appointments_new} component={NewAppointment} />
           <Route exact path={links.appointments_id} component={Appointment} />
           <Route exact path={links.appointments} component={Appointments} />
           <Route exact path={links.messages_new} component={NewMessage} />
           <Route exact path={links.messages_id} component={Message} />
           <Route exact path={links.messages} component={Messages} />
-          <Redirect to={links.appointments} />
+          <Route>
+            <Redirect to={links.appointments} />
+          </Route>
         </Switch>
       </Router>
     </MuiThemeProvider>
