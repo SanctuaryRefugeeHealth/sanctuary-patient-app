@@ -4,6 +4,8 @@ const appointments_new = "/appointments/new";
 const messages = "/appointments/:id/messages";
 const messages_id = "/appointments/:appointment_id/messages/:id";
 const messages_new = "/appointments/:id/messages/new";
+const login = "/login";
+const signup = "/signup";
 
 export default {
   appointments,
@@ -11,5 +13,7 @@ export default {
   appointments_new,
   messages,
   messages_id,
-  messages_new
+  messages_new,
+  login,
+  signup
 };
