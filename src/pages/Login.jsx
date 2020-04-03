@@ -13,18 +13,7 @@ import {
 } from "@material-ui/core";
 import links from "../constants/links";
 import { auth } from '../services/authentication';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://sanctuaryrefugee.ca/">
-                Sanctuary Refugee Health Centre
-            </Link>
-            {' 2020'}
-        </Typography>
-    );
-}
+import { Copyright } from '../components'
 
 const useStyles = makeStyles((theme) => ({
     root: {
