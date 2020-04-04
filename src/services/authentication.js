@@ -40,7 +40,7 @@ function logout() {
 }
 
 function signup(data) {
-    return axios.post(`${API_URL}/users`, { email: data.email, password: data.password })
+    return axios.put(`${API_URL}/user`, { email: data.email, password: data.password })
         .then(response => login(data))
         .catch(err => Promise.reject(err.response.status));
 }
