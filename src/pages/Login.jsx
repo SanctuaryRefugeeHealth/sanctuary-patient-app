@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+    Avatar,
     Button,
     CssBaseline,
     TextField,
-    Link,
     Grid,
-    Box,
     Typography,
     Container
 } from "@material-ui/core";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import links from "../constants/links";
-import { auth } from '../services/authentication';
-import { Copyright } from '../components'
+import { jwt } from '../services/authentication';
+import AuthContext from '../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,12 +25,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
-    title: {
-        fontWeight: 600,
-        color: '#303F9F',
-    },
     error: {
-        marginTop: theme.spacing(6),
+        marginTop: theme.spacing(2),
         paddingLeft: theme.spacing(1),
         color: '#eb2f06',
     },
@@ -52,7 +48,7 @@ export default () => {
     const classes = useStyles();
     const [account, setAccount] = useState(initAccount)
     const [error, setError] = useState('')
-    const [login, setLogin] = useState(false)
+    const { auth, setAuth } = useContext(AuthContext)
 
     const handleChange = e => {
         // TODO: validation
@@ -61,10 +57,10 @@ export default () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        auth.login(account)
+        jwt.login(account)
             .then(
                 data => {
-                    setLogin(true)
+                    setAuth({ state: data.state })
                 },
                 status => {
                     switch (status) {
@@ -80,16 +76,19 @@ export default () => {
     }
 
     return (
-        login ?
+        auth.state === 'login' ?
             <Redirect to={links.appointments} />
             :
             <div className={classes.root}>
                 <Container component="main" maxWidth="xs" >
                     <CssBaseline />
                     <div className={classes.paper}>
-                        <Typography component="h1" variant="h4" className={classes.title}>
-                            Sanctuary Patient App
-                    </Typography>
+                        <Avatar className={classes.avatar}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Log in
+                        </Typography>
 
                         <Grid container className={classes.error}>
                             <Grid item xs>
@@ -106,6 +105,7 @@ export default () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                autoFocus
                                 onChange={handleChange}
                             />
                             <TextField
@@ -129,6 +129,10 @@ export default () => {
                             >
                                 Log In
                         </Button>
+                            {/* 
+                            TODO: Password reset email
+                            TODO: Enable signup page when SU and Access granting is ready
+
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
@@ -140,12 +144,9 @@ export default () => {
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
-                            </Grid>
+                            </Grid> */}
                         </form>
                     </div>
-                    <Box mt={6}>
-                        <Copyright />
-                    </Box>
                 </Container>
             </div>
     );
