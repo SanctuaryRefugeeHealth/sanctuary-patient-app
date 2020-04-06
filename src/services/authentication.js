@@ -19,7 +19,7 @@ function get(link) {
 }
 
 function post(link, data) {
-    return axios.get(`${API_URL}${link}`, { headers: { 'x-access-token': localStorage.getItem('x-access-token') } }, data)
+    return axios.post(`${API_URL}${link}`, data, { headers: { 'x-access-token': localStorage.getItem('x-access-token') } })
         .then(response => response.data)
         .catch(err => Promise.reject('Request Not Authenticated!'));
 }
