@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_HOST = process.env.REACT_APP_API_HOST || 'localhost'
 const API_URL = `http://${API_HOST}/api`
-const TOKEN_TIMEOUT = process.env.REACT_APP_TOKEN_TIMEOUT || 12 * 60 * 60 * 1000 // 12 hours (43200 secs)
+const TOKEN_TIMEOUT = parseInt(process.env.REACT_APP_TOKEN_TIMEOUT) || 12 * 60 * 60 * 1000 // 12 hours (43200 secs)
 
 export const jwt = {
     get,
@@ -75,5 +75,6 @@ function signup(data) {
 }
 
 export function isAuthenticated() {
-    return localStorage.getItem('x-access-token') && localStorage.getItem('x-access-token-expiration') > Date.now()
+    const expiration = parseInt(localStorage.getItem('x-access-token-expiration'))
+    return localStorage.getItem('x-access-token') && expiration > Date.now()
 }
