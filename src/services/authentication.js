@@ -7,19 +7,45 @@ const TOKEN_TIMEOUT = process.env.REACT_APP_TOKEN_TIMEOUT || 12 * 60 * 60 * 1000
 export const jwt = {
     get,
     post,
+    put,
+    patch,
+    remove,
     login,
     logout,
     signup
 }
 
+const header = _ => {
+    const token = localStorage.getItem('x-access-token')
+    return { headers: { 'x-access-token': token } }
+}
+
 function get(link) {
-    return axios.get(`${API_URL}${link}`, { headers: { 'x-access-token': localStorage.getItem('x-access-token') } })
+    return axios.get(`${API_URL}${link}`, header())
         .then(response => response.data)
         .catch(err => Promise.reject('Request Not Authenticated!'));
 }
 
 function post(link, data) {
-    return axios.post(`${API_URL}${link}`, data, { headers: { 'x-access-token': localStorage.getItem('x-access-token') } })
+    return axios.post(`${API_URL}${link}`, data, header())
+        .then(response => response.data)
+        .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+function put(link, data) {
+    return axios.put(`${API_URL}${link}`, data, header())
+        .then(response => response.data)
+        .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+function patch(link, data) {
+    return axios.patch(`${API_URL}${link}`, data, header())
+        .then(response => response.data)
+        .catch(err => Promise.reject('Request Not Authenticated!'));
+}
+
+function remove(link, data) {
+    return axios.delete(`${API_URL}${link}`, data, header())
         .then(response => response.data)
         .catch(err => Promise.reject('Request Not Authenticated!'));
 }
