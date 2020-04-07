@@ -91,9 +91,11 @@ export default () => {
                         </Typography>
 
                         <Grid container className={classes.error}>
-                            <Grid item xs>
-                                {error}
-                            </Grid>
+                            {error &&
+                                <Grid item xs>
+                                    {error}
+                                </Grid>
+                            }
                         </Grid>
                         <form className={classes.form} noValidate onSubmit={handleSubmit}>
                             <TextField
