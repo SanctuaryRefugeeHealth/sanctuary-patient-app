@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
     Button,
-    CssBaseline,
     TextField,
     Grid,
     Typography,
@@ -81,7 +80,6 @@ export default () => {
             :
             <div className={classes.root}>
                 <Container component="main" maxWidth="xs" >
-                    <CssBaseline />
                     <div className={classes.paper}>
                         <Avatar className={classes.avatar}>
                             <LockOutlinedIcon />

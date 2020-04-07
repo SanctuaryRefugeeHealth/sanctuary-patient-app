@@ -1,5 +1,6 @@
 import React from "react";
 import theme from "./constants/theme";
+import { CssBaseline } from "@material-ui/core";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import links from "./constants/links";
 import { AuthRoute, Header, Footer } from "./components"
@@ -24,6 +25,7 @@ const App = () => {
     <MuiThemeProvider theme={theme}>
       <AuthProvider>
         <Router>
+          <CssBaseline />
           <Header />
           <Switch>
             <Route exact path={links.appointments_new} component={AuthRoute(NewAppointment, 'access:editor')} />
