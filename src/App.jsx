@@ -35,7 +35,8 @@ const App = () => {
             <Route exact path={links.messages_id} component={AuthRoute(Message, 'access:viewer')} />
             <Route exact path={links.messages} component={AuthRoute(Messages, 'access:viewer')} />
             <Route exact path={links.login} component={Login} />
-            <Route exact path={links.signup} component={Signup} />
+            {/* TODO: enable signup route when SU and Access granting is implemented
+            <Route exact path={links.signup} component={Signup} /> */}
             <Route>
               <Redirect to={links.appointments} />
             </Route>
