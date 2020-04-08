@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const API_HOST = process.env.REACT_APP_API_HOST || 'https://localhost'
+const API_HOST = process.env.REACT_APP_API_HOST
 const API_URL = `${API_HOST}/api`
-const TOKEN_TIMEOUT = parseInt(process.env.REACT_APP_TOKEN_TIMEOUT) || 12 * 60 * 60 * 1000 // 12 hours (43200 secs)
+const TOKEN_TIMEOUT = parseInt(process.env.REACT_APP_TOKEN_TIMEOUT)
 
 export const jwt = {
     get,
