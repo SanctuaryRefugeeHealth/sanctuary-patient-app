@@ -4,4 +4,8 @@ const getMessages = (id) => {
   return jwt.get(`/appointments/${id}/messages`)
 }
 
-export { getMessages }
+const getCommunications = (id) => {
+  return jwt.get(`/communications/${id}`)
+}
+
+export { getMessages, getCommunications }
