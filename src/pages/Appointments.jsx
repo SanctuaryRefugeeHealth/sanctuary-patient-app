@@ -21,15 +21,21 @@ import { getAppointments } from "../services/appointments";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
     overflowX: "auto"
   },
   table: {
-    minWidth: 650
+    minWidth: 650,
+  },
+  tableRow: {
+    height: 80,
+    [theme.breakpoints.up('sm')]: {
+      height: 40,
+    },
   }
-});
+}));
 
 const initHeaders = [
   {
@@ -129,8 +135,8 @@ export default function Appointments() {
           ? 1
           : -1
         : b[field] > a[field]
-        ? 1
-        : -1;
+          ? 1
+          : -1;
     });
     setFilteredRows(sorted);
   };
@@ -189,6 +195,7 @@ export default function Appointments() {
               key={row.id}
               hover
               onClick={() => history.push(`/appointments/${row.id}`)}
+              className={classes.tableRow}
             >
               <TableCell component="th" scope="row">
                 {row.patientName}
