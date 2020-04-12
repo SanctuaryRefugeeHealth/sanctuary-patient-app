@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default () => {
     const classes = useStyles();
     const { auth, setAuth } = useContext(AuthContext)
-    const handleClick = e => jwt.logout().then(data => { setAuth({ state: data.state }) })
+    const handleClick = e => jwt.logout().then(data => { setAuth({ state: data.state, timeout: data.timeout }) })
 
     return (
         <AppBar position="static" color="default" elevation={0} className={classes.appBar}>

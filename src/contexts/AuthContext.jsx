@@ -1,10 +1,11 @@
 import React, { createContext, useState } from "react";
-import { isAuthenticated } from '../services/authentication'
+import { isAuthenticated, getExpirationTime } from '../services/authentication'
 
 const AuthContext = createContext(null)
 const { Provider } = AuthContext
 const initAuth = {
     state: isAuthenticated() ? 'login' : 'logout',
+    timeout: getExpirationTime()
 }
 
 export const AuthProvider = ({ children }) => {
