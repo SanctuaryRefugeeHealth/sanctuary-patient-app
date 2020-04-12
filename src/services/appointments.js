@@ -1,66 +1,33 @@
-const data = [
-  {
-    id: "1",
-    patientName: "Sample Patient",
-    patientPhone: "123-456-7890",
-    practitionerName: "Dr. Sample Practitioner",
-    clinicName: "Foo Bar Inc.",
-    clinicAddress: "123 Fake Street, Kitchener, ON, N1O 1N0",
-    clinicPhone: "987-654-3211",
-    date: new Date(),
-    confirmed: false
-  },
-  {
-    id: "2",
-    patientName: "Patient Sample",
-    patientPhone: "123-456-7890",
-    practitionerName: "Practitioner Sample, RMT",
-    clinicName: "Boo Far Co.",
-    clinicAddress: "678 Artificial Ave., Kitchener, ON, N1O 1N0",
-    clinicPhone: "987-654-3211",
-    date: new Date(),
-    confirmed: true
-  }
-];
-
-// TODO: update to use `/appointments`
+import { jwt } from './authentication';
 
 const getAppointments = () => {
-  return new Promise(r => r(data));
+  return jwt.get("/appointments");
 };
 
-const getAppointmentById = id => {
-  const appointment = data.find(appt => appt.id === id);
-  if (!appointment) {
-    return new Promise(r => r({}));
-  }
-  return new Promise(r => r(appointment));
+const getAppointment = id => {
+  return jwt.get(`/appointments/${id}`);
 };
 
 const createAppointment = appointment => {
-  const createdAppointment = {
-    ...appointment,
-    confirmed: false,
-    id: Math.floor(Math.random() * 1000).toString()
-  };
-  return new Promise(r => r(createdAppointment));
+  return jwt.post('/appointments', appointment);
 };
 
 const updateAppointmentConfirmed = (id, confirmed = true) => {
-  const appointment = data.find(appt => appt.id === id);
-  if (!appointment) {
-    return new Promise(r => r({}));
-  }
-  const updatedAppointment = {
-    ...appointment,
-    confirmed
-  };
-  return new Promise(r => r(updatedAppointment));
+  return jwt.patch(`/appointments/${id}`, { confirmed })
+};
+
+const confirmAppointment = (id) => {
+  return updateAppointmentConfirmed(id, true)
+}
+
+const deleteAppointment = id => {
+  return jwt.delete(`/appointments/${id}`);
 };
 
 export {
   getAppointments,
-  getAppointmentById,
+  getAppointment,
   createAppointment,
-  updateAppointmentConfirmed
+  confirmAppointment,
+  deleteAppointment
 };
