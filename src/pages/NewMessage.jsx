@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { getTemplates, getLanguages, getAppointmentById } from '../services';
+import { getTemplates, getLanguages, getAppointment } from '../services';
 
 
 class NewMessage extends React.Component {
@@ -21,7 +21,7 @@ class NewMessage extends React.Component {
   async componentDidMount() {
     const languages = await getLanguages();
     const templates = await getTemplates();
-    const appointment = await getAppointmentById('1');
+    const appointment = await getAppointment('1');
     this.setState({
       appointment,
       languages,
