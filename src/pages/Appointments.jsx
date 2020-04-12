@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import { APPOINTMENTS } from "../constants/apis";
 import {
   Table,
   TableBody,
