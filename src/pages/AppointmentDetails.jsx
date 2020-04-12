@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAppointmentById } from "../services/appointments";
+import { getAppointment } from "../services/appointments";
 import { CircularProgress, Typography } from "@material-ui/core/";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
@@ -10,7 +10,7 @@ export default () => {
   useEffect(() => {
     const getData = async () => {
       const appointmentId = location.pathname.split("/").pop();
-      const data = await getAppointmentById(appointmentId);
+      const data = await getAppointment(appointmentId);
       setAppointment(data);
     };
     getData();
