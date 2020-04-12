@@ -54,9 +54,10 @@ function login(data) {
     const email = data.email
     return axios.post(`${API_URL}/auth`, { email, password: data.password })
         .then(response => {
+            const timeout = Date.now() + TOKEN_TIMEOUT
             localStorage.setItem('x-access-token', response.data.token);
-            localStorage.setItem('x-access-token-expiration', Date.now() + TOKEN_TIMEOUT);
-            return { ...response.data, state: 'login' }
+            localStorage.setItem('x-access-token-expiration', timeout);
+            return { ...response.data, state: 'login', timeout }
         })
         .catch(err => Promise.reject(err.response.status));
 }
@@ -65,7 +66,7 @@ function logout() {
     localStorage.removeItem('x-access-token')
     localStorage.removeItem('x-access-token-expiration')
 
-    return new Promise(r => r({ state: 'logout' }));
+    return new Promise(r => r({ state: 'logout', timeout: 0 }));
 }
 
 function signup(data) {
@@ -77,4 +78,9 @@ function signup(data) {
 export function isAuthenticated() {
     const expiration = parseInt(localStorage.getItem('x-access-token-expiration'))
     return localStorage.getItem('x-access-token') && expiration > Date.now()
+}
+
+export function getExpirationTime() {
+    const expiration = localStorage.getItem('x-access-token-expiration')
+    return expiration ? parseInt(expiration) : 0;
 }
