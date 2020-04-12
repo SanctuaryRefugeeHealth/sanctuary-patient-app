@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1, 1.5),
         fontWeight: 700,
         color: '#273c75',
+        fontSize: '0.9em',
+        [theme.breakpoints.up('sm')]: {
+            fontSize: '1em',
+        },
     }
 }));
 

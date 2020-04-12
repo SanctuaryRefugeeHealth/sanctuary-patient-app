@@ -142,7 +142,7 @@ export default function Appointments() {
   };
 
   return (
-    <>
+    <div className={classes.root}>
       <Box p={1} display="flex">
         <TextField
           type="search"
@@ -210,6 +210,6 @@ export default function Appointments() {
           ))}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 }
