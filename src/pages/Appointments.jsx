@@ -47,7 +47,7 @@ const initHeaders = [
   },
   {
     label: "Phone",
-    field: "patientPhone",
+    field: "patientPhoneNumber",
     direction: undefined // desc or asc,
   },
   {
@@ -57,22 +57,22 @@ const initHeaders = [
   },
   {
     label: "Clinic",
-    field: "clinicName",
+    field: "practitionerClinicName",
     direction: undefined // desc or asc,
   },
   {
     label: "Address",
-    field: "clinicAddress",
+    field: "practitionerAddress",
     direction: undefined // desc or asc,
   },
   {
     label: "Date",
-    field: "date",
+    field: "appointmentTime",
     direction: undefined // desc or asc,
   },
   {
     label: "Confirmed",
-    field: "confirmed",
+    field: "appointmentIsConfirmed",
     direction: undefined // desc or asc,
   }
 ];
