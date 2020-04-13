@@ -13,7 +13,7 @@ const createAppointment = appointment => {
 };
 
 const updateAppointmentConfirmed = (id, confirmed = true) => {
-  return jwt.patch(`/appointments/${id}`, { confirmed })
+  return jwt.patch(`/appointments/${id}`, { isConfirmed: confirmed })
 };
 
 const confirmAppointment = (id) => {
@@ -21,7 +21,7 @@ const confirmAppointment = (id) => {
 }
 
 const deleteAppointment = id => {
-  return jwt.delete(`/appointments/${id}`);
+  return jwt.remove(`/appointments/${id}`);
 };
 
 export {
