@@ -101,7 +101,7 @@ export default () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getAppointment(appointmentId);
-      setAppointment(data[0]);
+      setAppointment(data);
     };
     getData();
   }, [confirm]);
