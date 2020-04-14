@@ -54,7 +54,7 @@ const NewAppointment = () => {
         }
         return months[str.substring(0, 3).toLowerCase()]
       }
-      const changeDateFormat = (date) => {
+      const changeDateFormat = date => {
         const tokens = date.toString().split(' ')
         const yyyy = tokens[3]
         const mm = convertMonth(tokens[1])
@@ -62,8 +62,10 @@ const NewAppointment = () => {
         const hhmmss = tokens[4]
         return `${yyyy}-${mm}-${dd} ${hhmmss}`
       }
+      const getLanguageById = id => languages[id - 1].name.toLowerCase()
       const formattedDate = changeDateFormat(selectedDate)
-      createAppointment({ ...formData, date: formattedDate })
+      const language = getLanguageById(formData.patientLanguage)
+      createAppointment({ ...formData, patientLanguage: language, date: formattedDate })
         .then(handle('moveNext'))
     },
   })[action]
