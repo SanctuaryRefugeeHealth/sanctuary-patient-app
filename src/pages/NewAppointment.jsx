@@ -64,7 +64,7 @@ const NewAppointment = () => {
       }
       const formattedDate = changeDateFormat(selectedDate)
       createAppointment({ ...formData, date: formattedDate })
-        .then(handle('moveNext')())
+        .then(handle('moveNext'))
     },
   })[action]
 
