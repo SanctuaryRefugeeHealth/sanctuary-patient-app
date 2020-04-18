@@ -8,6 +8,7 @@ import {
   StepLabel,
   Paper,
 } from "@material-ui/core";
+import moment from "moment";
 import { ContentSwitch } from "../components";
 import { FormPatient, FormClinic, FormAppointment, Buttons } from "../components/NewAppointment"
 import { createAppointment } from "../services";
@@ -47,24 +48,10 @@ const NewAppointment = () => {
     moveBack: _ => setActiveStep(step => step - 1),
     submit: e => {
       e.preventDefault();
-      const convertMonth = str => {
-        const months = {
-          jan: '01', feb: '02', mar: '03', apr: '04', may: '05', jun: '06',
-          jul: '07', aug: '08', sep: '09', oct: '10', nov: '11', dec: '12'
-        }
-        return months[str.substring(0, 3).toLowerCase()]
-      }
-      const changeDateFormat = date => {
-        const tokens = date.toString().split(' ')
-        const yyyy = tokens[3]
-        const mm = convertMonth(tokens[1])
-        const dd = tokens[2]
-        const hhmmss = tokens[4]
-        return `${yyyy}-${mm}-${dd} ${hhmmss}`
-      }
       const getLanguageById = id => languages[id - 1].name.toLowerCase()
-      const formattedDate = changeDateFormat(selectedDate)
       const language = getLanguageById(formData.patientLanguage)
+      const formattedDate = moment.utc(selectedDate).format('YYYY-MM-DD HHmmss')
+      console.log({ ...formData, patientLanguage: language, date: formattedDate })
       createAppointment({ ...formData, patientLanguage: language, date: formattedDate })
         .then(handle('moveNext'))
     },
