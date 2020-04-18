@@ -51,7 +51,6 @@ const NewAppointment = () => {
       const getLanguageById = id => languages[id - 1].name.toLowerCase()
       const language = getLanguageById(formData.patientLanguage)
       const formattedDate = moment.utc(selectedDate).format('YYYY-MM-DD HHmmss')
-      console.log({ ...formData, patientLanguage: language, date: formattedDate })
       createAppointment({ ...formData, patientLanguage: language, date: formattedDate })
         .then(handle('moveNext'))
     },
