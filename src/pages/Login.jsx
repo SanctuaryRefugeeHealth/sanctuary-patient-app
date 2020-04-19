@@ -16,7 +16,7 @@ import AuthContext from '../contexts/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: theme.spacing(10),
+        margin: theme.spacing(10),
     },
     paper: {
         marginTop: theme.spacing(8),

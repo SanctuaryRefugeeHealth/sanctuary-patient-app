@@ -65,7 +65,7 @@ export default () => {
             jwt.signup(account)
                 .then(
                     data => {
-                        setAuth({ state: data.state })
+                        setAuth({ state: data.state, timeout: data.timeout })
                     },
                     error => {
                         setError('Problem signing up')
