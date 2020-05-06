@@ -20,7 +20,7 @@ const languages = [
     {
         id: 4,
         iso: "ti",
-        name: "Tigrinya",
+        name: "Amharic",
         direction: "ltr"
     },
     {
