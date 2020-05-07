@@ -13,26 +13,26 @@ const languages = [
     },
     {
         id: 3,
-        iso: "es",
-        name: "Spanish",
+        iso: "ti",
+        name: "Amharic",
         direction: "ltr"
     },
     {
         id: 4,
-        iso: "ti",
-        name: "Tigrinya",
-        direction: "ltr"
-    },
-    {
-        id: 5,
         iso: "so",
         name: "Somali",
         direction: "ltr"
     },
     {
-        id: 6,
+        id: 5,
         iso: "tr",
         name: "Turkish",
+        direction: "ltr"
+    },
+    {
+        id: 6,
+        iso: "es",
+        name: "Spanish",
         direction: "ltr"
     }
 ];
