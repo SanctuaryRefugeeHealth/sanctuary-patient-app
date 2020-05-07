@@ -19,8 +19,9 @@ import {
   Button
 } from "@material-ui/core";
 import moment from "moment";
+import { removeTimezoneField } from "../services/formats";
 import { getAppointments } from "../services/appointments";
-import PaginationActions from "../components/PaginationActions"
+import PaginationActions from "../components/PaginationActions";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -129,7 +130,10 @@ export default function Appointments() {
   };
 
   useEffect(() => {
-    getAppointments().then(resp => setData(resp));
+    getAppointments().then(resp => {
+      resp.map(el => el.appointmentTime = removeTimezoneField(el.appointmentTime))
+      setData(resp)
+    });
   }, [setData]);
 
   useEffect(() => {
