@@ -129,7 +129,10 @@ export default function Appointments() {
   };
 
   useEffect(() => {
-    getAppointments().then(resp => setData(resp));
+    getAppointments().then(resp => {
+      resp.map(a => a.appointmentTime = moment(a.appointmentTime).format())  // utc to localtime
+      setData(resp)
+    });
   }, [setData]);
 
   useEffect(() => {
