@@ -17,7 +17,6 @@ import {
   confirmAppointment,
   deleteAppointment
 } from "../services/appointments";
-import { removeTimezoneField } from "../services/formats";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -102,7 +101,6 @@ export default () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getAppointment(appointmentId);
-      data.appointmentTime = removeTimezoneField(data.appointmentTime)
       setAppointment(data);
     };
     getData();
