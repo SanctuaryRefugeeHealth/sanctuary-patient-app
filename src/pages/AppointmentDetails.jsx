@@ -101,7 +101,6 @@ export default () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getAppointment(appointmentId);
-      data.appointmentTime = moment(data.appointmentTime).format()  // utc to localtime
       setAppointment(data);
     };
     getData();
