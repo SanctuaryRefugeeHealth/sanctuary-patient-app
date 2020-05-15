@@ -97,10 +97,12 @@ export default () => {
     deleteAppointment(appointmentId)
       .then(() => history.push(`/appointments`))
   }
+  const removeTimezonePostfix = (datetime) => moment.utc(datetime).format('YYYY-MM-DD HH:mm:ss')
 
   useEffect(() => {
     const getData = async () => {
       const data = await getAppointment(appointmentId);
+      data.appointmentTime = removeTimezonePostfix(data.appointmentTime)
       setAppointment(data);
     };
     getData();

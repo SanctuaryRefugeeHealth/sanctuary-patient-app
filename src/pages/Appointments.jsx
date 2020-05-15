@@ -127,9 +127,13 @@ export default function Appointments() {
     });
     setFilteredRows(sorted);
   };
+  const removeTimezonePostfix = (datetime) => moment.utc(datetime).format('YYYY-MM-DD HH:mm:ss')
 
   useEffect(() => {
-    getAppointments().then(resp => setData(resp));
+    getAppointments().then(resp => {
+      resp.map(a => a.appointmentTime = removeTimezonePostfix(a.appointmentTime))
+      setData(resp)
+    });
   }, [setData]);
 
   useEffect(() => {
