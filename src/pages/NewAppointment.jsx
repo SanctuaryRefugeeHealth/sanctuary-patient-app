@@ -185,41 +185,43 @@ const NewAppointment = () => {
             <Typography variant="h6" gutterBottom>
               Patient
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={6} sm={4}>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  id="patientName"
-                  name="patientName"
-                  label="Patient Name"
-                  type="text"
-                />
-              </Grid>
-              <Grid item xs={6} sm={4}>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  id="patientPhoneNumber"
-                  name="patientPhoneNumber"
-                  label="Phone Number"
-                  type="text"
-                />
-              </Grid>
-              <Grid item xs={6} sm={4}>
-                <FormControl className={classes.formControl} fullWidth>
+            <div className={classes.content}>
+              <Grid container spacing={3}>
+                <Grid item xs={6} sm={4}>
                   <Field
                     component={TextField}
-                    id="patientLanguage"
-                    name="patientLanguage"
-                    label="Language"
-                    select
-                  >
-                    {languageOptions}
-                  </Field>
-                </FormControl>
+                    fullWidth
+                    id="patientName"
+                    name="patientName"
+                    label="Patient Name"
+                    type="text"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <Field
+                    component={TextField}
+                    fullWidth
+                    id="patientPhoneNumber"
+                    name="patientPhoneNumber"
+                    label="Phone Number"
+                    type="text"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <FormControl className={classes.formControl} fullWidth>
+                    <Field
+                      component={TextField}
+                      id="patientLanguage"
+                      name="patientLanguage"
+                      label="Language"
+                      select
+                    >
+                      {languageOptions}
+                    </Field>
+                  </FormControl>
+                </Grid>
               </Grid>
-            </Grid>
+            </div>
           </AppointmentFormStep>
           <AppointmentFormStep
             onSubmit={async (values) => {
@@ -238,94 +240,72 @@ const NewAppointment = () => {
             <Typography variant="h6" gutterBottom>
               Clinic
             </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={6} sm={4}>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  id="practitionerClinicName"
-                  name="practitionerClinicName"
-                  label="Clinic Name"
-                  type="text"
-                />
+            <div className={classes.content}>
+              <Grid container spacing={3}>
+                <Grid item xs={6} sm={4}>
+                  <Field
+                    component={TextField}
+                    fullWidth
+                    id="practitionerClinicName"
+                    name="practitionerClinicName"
+                    label="Clinic Name"
+                    type="text"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <Field
+                    component={TextField}
+                    fullWidth
+                    id="specialistName"
+                    name="specialistName"
+                    label="Specialist Name"
+                    type="text"
+                  />
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <Field
+                    component={TextField}
+                    fullWidth
+                    id="practitionerPhoneNumber"
+                    name="practitionerPhoneNumber"
+                    label="Phone Number"
+                    type="text"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Field
+                    component={TextField}
+                    fullWidth
+                    id="location"
+                    name="location"
+                    label="Address"
+                    type="text"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={6} sm={4}>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  id="specialistName"
-                  name="specialistName"
-                  label="Specialist Name"
-                  type="text"
-                />
-              </Grid>
-              <Grid item xs={6} sm={4}>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  id="practitionerPhoneNumber"
-                  name="practitionerPhoneNumber"
-                  label="Phone Number"
-                  type="text"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  id="location"
-                  name="location"
-                  label="Address"
-                  type="text"
-                />
-              </Grid>
-            </Grid>
+            </div>
           </AppointmentFormStep>
           <AppointmentFormStep>
             <Typography variant="h6" className={classes.subtitle} gutterBottom>
               Patient
             </Typography>
-            <Grid container spacing={1}>
-              <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField} gutterBottom>
-                  {formData.patientName}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField} gutterBottom>
-                  {formatPhoneNumber(formData.patientPhoneNumber)}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField} gutterBottom>
-                  {formData.patientLanguage}
-                </Typography>
-              </Grid>
-            </Grid>
-
-            <Typography variant="h6" className={classes.subtitle} gutterBottom>
-              Clinic
-            </Typography>
-            <Grid container spacing={1}>
-              <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField}>
-                  {formData.practitionerClinicName}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField}>
-                  {formData.specialistName}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField}>
-                  {formatPhoneNumber(formData.practitionerPhoneNumber)}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography className={classes.textField} gutterBottom>
-                  {formData.location}
-                </Typography>
+            <div className={classes.content}>
+              <Grid container spacing={1}>
+                <Grid item xs={4} sm={4}>
+                  <Typography className={classes.textField} gutterBottom>
+                    {formData.patientName}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography className={classes.textField} gutterBottom>
+                    {formatPhoneNumber(formData.patientPhoneNumber)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography className={classes.textField} gutterBottom>
+                    {formData.patientLanguage}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Typography
@@ -333,34 +313,64 @@ const NewAppointment = () => {
                 className={classes.subtitle}
                 gutterBottom
               >
-                Appointment
+                Clinic
               </Typography>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container spacing={1}>
-                  <Grid item xs={6} sm={6}>
-                    <FormControl className={classes.formControl} fullWidth>
-                      <Field
-                        component={KeyboardDatePicker}
-                        id="appointmentDate"
-                        format="MM/dd/yyyy"
-                        name="appointmentDate"
-                        label="Appointment Date"
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <FormControl className={classes.formControl} fullWidth>
-                      <Field
-                        component={KeyboardTimePicker}
-                        id="appointmentTime"
-                        name="appointmentTime"
-                        label="Appointment Time"
-                      />
-                    </FormControl>
-                  </Grid>
+              <Grid container spacing={1}>
+                <Grid item xs={4} sm={4}>
+                  <Typography className={classes.textField}>
+                    {formData.practitionerClinicName}
+                  </Typography>
                 </Grid>
-              </MuiPickersUtilsProvider>
-            </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography className={classes.textField}>
+                    {formData.specialistName}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4} sm={4}>
+                  <Typography className={classes.textField}>
+                    {formatPhoneNumber(formData.practitionerPhoneNumber)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography className={classes.textField} gutterBottom>
+                    {formData.location}
+                  </Typography>
+                </Grid>
+
+                <Typography
+                  variant="h6"
+                  className={classes.subtitle}
+                  gutterBottom
+                >
+                  Appointment
+                </Typography>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid container spacing={1}>
+                    <Grid item xs={6} sm={6}>
+                      <FormControl className={classes.formControl} fullWidth>
+                        <Field
+                          component={KeyboardDatePicker}
+                          id="appointmentDate"
+                          format="MM/dd/yyyy"
+                          name="appointmentDate"
+                          label="Appointment Date"
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={6} sm={6}>
+                      <FormControl className={classes.formControl} fullWidth>
+                        <Field
+                          component={KeyboardTimePicker}
+                          id="appointmentTime"
+                          name="appointmentTime"
+                          label="Appointment Time"
+                        />
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </Grid>
+            </div>
           </AppointmentFormStep>
         </AppointmentForm>
       </Paper>
@@ -396,7 +406,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0, 3),
   },
   content: {
-    height: "48vh",
+    height: "38vh",
     padding: theme.spacing(2, 1, 9),
   },
   title: {
