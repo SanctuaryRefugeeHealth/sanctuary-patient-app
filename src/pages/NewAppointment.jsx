@@ -146,6 +146,9 @@ const NewAppointment = () => {
     );
   });
 
+  const formatPhoneNumber = (pn) =>
+    `+1 (${pn.substring(0, 3)}) ${pn.substring(3, 6)}-${pn.substring(6)} `;
+
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
@@ -290,7 +293,7 @@ const NewAppointment = () => {
               </Grid>
               <Grid item xs={4} sm={4}>
                 <Typography className={classes.textField} gutterBottom>
-                  {formData.patientPhoneNumber}
+                  {formatPhoneNumber(formData.patientPhoneNumber)}
                 </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>
@@ -316,7 +319,7 @@ const NewAppointment = () => {
               </Grid>
               <Grid item xs={4} sm={4}>
                 <Typography className={classes.textField}>
-                  {formData.practitionerPhoneNumber}
+                  {formatPhoneNumber(formData.practitionerPhoneNumber)}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
