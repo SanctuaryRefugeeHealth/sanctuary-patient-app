@@ -69,13 +69,17 @@ const AppointmentForm = ({ children, initialValues, onSubmit }) => {
   };
 
   const handleSubmit = async (values) => {
-    if (step.props.onSubmit) {
-      await step.props.onSubmit(values);
+    try {
+      if (step.props.onSubmit) {
+        await step.props.onSubmit(values);
+      }
+      if (isLastStep) {
+        await onSubmit(values);
+      }
+      next(values);
+    } catch (error) {
+      console.log("oh no", error);
     }
-    if (isLastStep) {
-      await onSubmit(values);
-    }
-    next(values);
   };
 
   return activeStep === totalSteps ? (
@@ -164,10 +168,10 @@ const NewAppointment = () => {
             const appointmentTime = moment(values.appointmentTime).format(
               "HH:mm:ss"
             );
-            createAppointment({
+            await createAppointment({
               ...formData,
               date: `${appointmentDate} ${appointmentTime}`,
-            }).catch((err) => console.log("oh no", err));
+            });
           }}
         >
           <AppointmentFormStep
