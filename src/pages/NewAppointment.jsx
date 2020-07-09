@@ -298,7 +298,12 @@ const NewAppointment = () => {
               </Grid>
             </div>
           </AppointmentFormStep>
-          <AppointmentFormStep>
+          <AppointmentFormStep
+            validationSchema={Yup.object({
+              appointmentDate: Yup.date().required("required").nullable(),
+              appointmentTime: Yup.date().required("required").nullable(),
+            })}
+          >
             <div className={classes.content}>
               <Typography
                 variant="h6"
