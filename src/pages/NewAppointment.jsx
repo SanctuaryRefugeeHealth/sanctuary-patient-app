@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+
+import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -28,6 +30,7 @@ import {
 } from "formik-material-ui-pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
+import links from "../constants/links";
 import languages from "../constants/languages";
 import { createAppointment } from "../services";
 
@@ -57,7 +60,7 @@ const AppointmentForm = ({ children, initialValues, onSubmit }) => {
 
   const next = (values) => {
     setFormData(values);
-    setactiveStep(Math.min(activeStep + 1, totalSteps - 1));
+    setactiveStep(Math.min(activeStep + 1, totalSteps));
   };
 
   const previous = (values) => {
@@ -65,19 +68,19 @@ const AppointmentForm = ({ children, initialValues, onSubmit }) => {
     setactiveStep(Math.max(activeStep - 1, 0));
   };
 
-  const handleSubmit = async (values, bag) => {
+  const handleSubmit = async (values) => {
     if (step.props.onSubmit) {
-      await step.props.onSubmit(values, bag);
+      await step.props.onSubmit(values);
     }
     if (isLastStep) {
-      return onSubmit(values, bag);
-    } else {
-      bag.setTouched({});
-      next(values);
+      await onSubmit(values);
     }
+    next(values);
   };
 
-  return (
+  return activeStep === totalSteps ? (
+    <Redirect to={links.appointments} />
+  ) : (
     <Formik
       initialValues={formData}
       onSubmit={handleSubmit}
@@ -164,9 +167,7 @@ const NewAppointment = () => {
             createAppointment({
               ...formData,
               date: `${appointmentDate} ${appointmentTime}`,
-            })
-              .then(() => console.log("done"))
-              .catch(() => console.log("oh no"));
+            }).catch((err) => console.log("oh no", err));
           }}
         >
           <AppointmentFormStep
