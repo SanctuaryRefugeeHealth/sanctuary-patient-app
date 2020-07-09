@@ -187,10 +187,14 @@ const NewAppointment = () => {
               patientLanguage: Yup.string().required("required"),
             })}
           >
-            <Typography variant="h6" gutterBottom>
-              Patient
-            </Typography>
             <div className={classes.content}>
+              <Typography
+                variant="h6"
+                className={classes.subtitle}
+                gutterBottom
+              >
+                Patient
+              </Typography>
               <Grid container spacing={3}>
                 <Grid item xs={6} sm={4}>
                   <Field
@@ -242,10 +246,14 @@ const NewAppointment = () => {
               location: Yup.string().required("required"),
             })}
           >
-            <Typography variant="h6" gutterBottom>
-              Clinic
-            </Typography>
             <div className={classes.content}>
+              <Typography
+                variant="h6"
+                className={classes.subtitle}
+                gutterBottom
+              >
+                Clinic
+              </Typography>
               <Grid container spacing={3}>
                 <Grid item xs={6} sm={4}>
                   <Field
@@ -291,10 +299,14 @@ const NewAppointment = () => {
             </div>
           </AppointmentFormStep>
           <AppointmentFormStep>
-            <Typography variant="h6" className={classes.subtitle} gutterBottom>
-              Patient
-            </Typography>
             <div className={classes.content}>
+              <Typography
+                variant="h6"
+                className={classes.subtitle}
+                gutterBottom
+              >
+                Patient
+              </Typography>
               <Grid container spacing={1}>
                 <Grid item xs={4} sm={4}>
                   <Typography className={classes.textField} gutterBottom>
@@ -341,40 +353,39 @@ const NewAppointment = () => {
                     {formData.location}
                   </Typography>
                 </Grid>
-
-                <Typography
-                  variant="h6"
-                  className={classes.subtitle}
-                  gutterBottom
-                >
-                  Appointment
-                </Typography>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={6} sm={6}>
-                      <FormControl className={classes.formControl} fullWidth>
-                        <Field
-                          component={KeyboardDatePicker}
-                          id="appointmentDate"
-                          format="MM/dd/yyyy"
-                          name="appointmentDate"
-                          label="Appointment Date"
-                        />
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={6} sm={6}>
-                      <FormControl className={classes.formControl} fullWidth>
-                        <Field
-                          component={KeyboardTimePicker}
-                          id="appointmentTime"
-                          name="appointmentTime"
-                          label="Appointment Time"
-                        />
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </MuiPickersUtilsProvider>
               </Grid>
+              <Typography
+                variant="h6"
+                className={classes.subtitle}
+                gutterBottom
+              >
+                Appointment
+              </Typography>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container spacing={1}>
+                  <Grid item xs={6} sm={6}>
+                    <FormControl className={classes.formControl} fullWidth>
+                      <Field
+                        component={KeyboardDatePicker}
+                        id="appointmentDate"
+                        format="MM/dd/yyyy"
+                        name="appointmentDate"
+                        label="Appointment Date"
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} sm={6}>
+                    <FormControl className={classes.formControl} fullWidth>
+                      <Field
+                        component={KeyboardTimePicker}
+                        id="appointmentTime"
+                        name="appointmentTime"
+                        label="Appointment Time"
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </MuiPickersUtilsProvider>
             </div>
           </AppointmentFormStep>
         </AppointmentForm>
@@ -411,7 +422,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0, 3),
   },
   content: {
-    height: "38vh",
+    height: "42vh",
     padding: theme.spacing(2, 1, 9),
   },
   title: {
