@@ -119,6 +119,20 @@ const AppointmentFormStep = ({ children }) => children;
 const NewAppointment = () => {
   const classes = useStyles();
 
+  const initialValues = {
+    patientName: "",
+    patientPhoneNumber: "",
+    patientLanguage: "english",
+    practitionerClinicName: "",
+    specialistName: "",
+    practitionerPhoneNumber: "",
+    location: "",
+    appointmentDate: new Date(),
+    appointmentTime: new Date(),
+  };
+
+  const [formData, setFormData] = useState(initialValues);
+
   const languageOptions = languages.map((language) => {
     return (
       <MenuItem
@@ -134,22 +148,15 @@ const NewAppointment = () => {
     <div className={classes.layout}>
       <Paper className={classes.paper}>
         <AppointmentForm
-          initialValues={{
-            patientName: "",
-            patientPhoneNumber: "",
-            patientLanguage: "english",
-            practitionerClinicName: "",
-            specialistName: "",
-            practitionerPhoneNumber: "",
-            location: "",
-            appointmentDate: new Date(),
-            appointmentTime: new Date(),
-          }}
+          initialValues={initialValues}
           onSubmit={async (values) =>
             console.log("AppointmentForm submit", values)
           }
         >
           <AppointmentFormStep
+            onSubmit={async (values) => {
+              setFormData(values);
+            }}
             validationSchema={Yup.object({
               patientName: Yup.string().required("required"),
               patientPhoneNumber: Yup.string().required("required"),
@@ -163,6 +170,7 @@ const NewAppointment = () => {
               <Grid item xs={6} sm={4}>
                 <Field
                   component={TextField}
+                  fullWidth
                   id="patientName"
                   name="patientName"
                   label="Patient Name"
@@ -172,6 +180,7 @@ const NewAppointment = () => {
               <Grid item xs={6} sm={4}>
                 <Field
                   component={TextField}
+                  fullWidth
                   id="patientPhoneNumber"
                   name="patientPhoneNumber"
                   label="Phone Number"
@@ -194,6 +203,9 @@ const NewAppointment = () => {
             </Grid>
           </AppointmentFormStep>
           <AppointmentFormStep
+            onSubmit={async (values) => {
+              setFormData(values);
+            }}
             validationSchema={Yup.object({
               practitionerClinicName: Yup.string().required("required"),
               specialistName: Yup.string().required("required"),
@@ -208,6 +220,7 @@ const NewAppointment = () => {
               <Grid item xs={6} sm={4}>
                 <Field
                   component={TextField}
+                  fullWidth
                   id="practitionerClinicName"
                   name="practitionerClinicName"
                   label="Clinic Name"
@@ -217,6 +230,7 @@ const NewAppointment = () => {
               <Grid item xs={6} sm={4}>
                 <Field
                   component={TextField}
+                  fullWidth
                   id="specialistName"
                   name="specialistName"
                   label="Specialist Name"
@@ -226,6 +240,7 @@ const NewAppointment = () => {
               <Grid item xs={6} sm={4}>
                 <Field
                   component={TextField}
+                  fullWidth
                   id="practitionerPhoneNumber"
                   name="practitionerPhoneNumber"
                   label="Phone Number"
@@ -235,6 +250,7 @@ const NewAppointment = () => {
               <Grid item xs={12}>
                 <Field
                   component={TextField}
+                  fullWidth
                   id="location"
                   name="location"
                   label="Address"
@@ -250,17 +266,17 @@ const NewAppointment = () => {
             <Grid container spacing={1}>
               <Grid item xs={4} sm={4}>
                 <Typography className={classes.textField} gutterBottom>
-                  a
+                  {formData.patientName}
                 </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>
                 <Typography className={classes.textField} gutterBottom>
-                  b
+                  {formData.patientPhoneNumber}
                 </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>
                 <Typography className={classes.textField} gutterBottom>
-                  c
+                  {formData.patientLanguage}
                 </Typography>
               </Grid>
             </Grid>
@@ -270,17 +286,23 @@ const NewAppointment = () => {
             </Typography>
             <Grid container spacing={1}>
               <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField}>d</Typography>
+                <Typography className={classes.textField}>
+                  {formData.practitionerClinicName}
+                </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField}>e</Typography>
+                <Typography className={classes.textField}>
+                  {formData.specialistName}
+                </Typography>
               </Grid>
               <Grid item xs={4} sm={4}>
-                <Typography className={classes.textField}>f</Typography>
+                <Typography className={classes.textField}>
+                  {formData.practitionerPhoneNumber}
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Typography className={classes.textField} gutterBottom>
-                  g
+                  {formData.location}
                 </Typography>
               </Grid>
 
