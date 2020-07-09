@@ -159,7 +159,10 @@ const NewAppointment = () => {
             }}
             validationSchema={Yup.object({
               patientName: Yup.string().required("required"),
-              patientPhoneNumber: Yup.string().required("required"),
+              patientPhoneNumber: Yup.string()
+                .matches(/\d+/, "phone number must only contain numbers")
+                .length(10, "phone number must be 10 digits long")
+                .required("required"),
               patientLanguage: Yup.string().required("required"),
             })}
           >
@@ -209,7 +212,10 @@ const NewAppointment = () => {
             validationSchema={Yup.object({
               practitionerClinicName: Yup.string().required("required"),
               specialistName: Yup.string().required("required"),
-              practitionerPhoneNumber: Yup.string().required("required"),
+              practitionerPhoneNumber: Yup.string()
+                .matches(/\d+/, "phone number must only contain numbers")
+                .length(10, "phone number must be 10 digits long")
+                .required("required"),
               location: Yup.string().required("required"),
             })}
           >
