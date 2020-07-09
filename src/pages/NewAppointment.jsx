@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
+import moment from "moment";
 import * as Yup from "yup";
 
 import {
@@ -28,6 +29,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 
 import languages from "../constants/languages";
+import { createAppointment } from "../services";
 
 const AppointmentForm = ({ children, initialValues, onSubmit }) => {
   const classes = useStyles();
@@ -149,9 +151,20 @@ const NewAppointment = () => {
       <Paper className={classes.paper}>
         <AppointmentForm
           initialValues={initialValues}
-          onSubmit={async (values) =>
-            console.log("AppointmentForm submit", values)
-          }
+          onSubmit={async (values) => {
+            const appointmentDate = moment(values.appointmentDate).format(
+              "YYYY-MM-DD"
+            );
+            const appointmentTime = moment(values.appointmentTime).format(
+              "HH:mm:ss"
+            );
+            createAppointment({
+              ...formData,
+              date: `${appointmentDate} ${appointmentTime}`,
+            })
+              .then(() => console.log("done"))
+              .catch(() => console.log("oh no"));
+          }}
         >
           <AppointmentFormStep
             onSubmit={async (values) => {
