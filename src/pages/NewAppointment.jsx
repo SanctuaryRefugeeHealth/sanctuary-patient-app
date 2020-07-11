@@ -14,6 +14,7 @@ import {
   Stepper,
   Step,
   StepLabel,
+  Snackbar,
   FormControl,
   Paper,
   MenuItem,
@@ -21,6 +22,8 @@ import {
 } from "@material-ui/core";
 
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+
+import MuiAlert from "@material-ui/lab/Alert";
 
 import { TextField } from "formik-material-ui";
 
@@ -34,11 +37,21 @@ import links from "../constants/links";
 import languages from "../constants/languages";
 import { createAppointment } from "../services";
 
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
+
 const AppointmentForm = ({ children, initialValues, onSubmit }) => {
   const classes = useStyles();
   const [activeStep, setactiveStep] = useState(0);
   const steps = React.Children.toArray(children);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
   const [formData, setFormData] = useState(initialValues);
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   const stepsText = [
     "Patient Information",
@@ -78,7 +91,8 @@ const AppointmentForm = ({ children, initialValues, onSubmit }) => {
       }
       next(values);
     } catch (error) {
-      console.log("oh no", error);
+      setSnackbarMessage(error);
+      setSnackbarOpen(true);
     }
   };
 
@@ -117,6 +131,15 @@ const AppointmentForm = ({ children, initialValues, onSubmit }) => {
               {isLastStep ? "Submit" : "Next"}
             </Button>
           </div>
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={6000}
+            onClose={handleCloseSnackbar}
+          >
+            <Alert onClose={handleCloseSnackbar} severity="error">
+              {snackbarMessage}
+            </Alert>
+          </Snackbar>
         </Form>
       )}
     </Formik>

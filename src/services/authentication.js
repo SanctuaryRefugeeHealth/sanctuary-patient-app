@@ -14,8 +14,8 @@ const on401 = _ => {
 const handlers = {
     401: on401,
 }
-const errorHandle = defaultHandle => code => handlers[code] || defaultHandle(code)  // currying
-const handle = errorHandle(code => Promise.reject(`Request error (${code})`))  // set default error handler
+const errorHandle = defaultHandle => (code, message) => handlers[code] || defaultHandle(code, message)  // currying
+const handle = errorHandle((code, message) => Promise.reject(message || `Request error (${code})`))  // set default error handler
 
 // HTTP request methods w/ JWT
 export const jwt = {
@@ -46,7 +46,7 @@ function post(link, data) {
     return axios.post(`${API_URL}${link}`, data, header())
         .then(
             response => response.data,
-            rejected => handle(rejected.response.status)
+            rejected => handle(rejected.response.status, rejected.response.data.message)
         )
 }
 
