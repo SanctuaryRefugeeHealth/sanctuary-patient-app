@@ -1,10 +1,18 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Avatar, Button, Grid, Typography, Container } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Typography,
+  Grid,
+  Container,
+  Snackbar,
+} from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 
 import { TextField } from "formik-material-ui";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import * as Yup from "yup";
 
@@ -23,11 +31,24 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
+  item: {
+      height: "100px"
+  }
 }));
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 export default () => {
   const classes = useStyles();
   const { auth, setAuth } = useContext(AuthContext);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
+  };
 
   return auth.state === "login" ? (
     <Redirect to={links.appointments} />
@@ -50,42 +71,75 @@ export default () => {
               email: Yup.string().email().required("required"),
               password: Yup.string().required("required"),
             })}
-            onSubmit={(values, {setSubmitting}) => {
-              setTimeout(() => {
-                setSubmitting(false);
-                alert(JSON.stringify(values, null, 2));
-              }, 500);
+            onSubmit={(values, { setSubmitting }) => {
+              jwt.login(values).then(
+                (data) => {
+                  console.log(data);
+                  setAuth({ state: data.state });
+                },
+                (status) => {
+                  setSubmitting(false);
+                  switch (status) {
+                    case 401:
+                      setSnackbarMessage("Incorrect email or password");
+                      setSnackbarOpen(true);
+                      break;
+                    default:
+                      setSnackbarMessage("Problem logging in");
+                      setSnackbarOpen(true);
+                      break;
+                  }
+                }
+              );
             }}
           >
-            {(formik) => (
-              <Form>
-                <Field
-                  component={TextField}
-                  fullWidth
-                  name="email"
-                  type="text"
-                  label="Email"
-                />
-                <Field
-                  component={TextField}
-                  fullWidth
-                  type="password"
-                  label="Password"
-                  name="password"
-                />
-                <Button
-                  color="primary"
-                  variant="contained"
-                  disabled={formik.isSubmitting}
-                  onClick={formik.submitForm}
-                >
-                  Submit
-                </Button>
+            {({ submitForm, isSubmitting }) => (
+              <Form onsubmit={submitForm}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} className={classes.item}>
+                    <Field
+                      component={TextField}
+                      fullWidth
+                      name="email"
+                      type="text"
+                      label="Email"
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.item}>
+                    <Field
+                      component={TextField}
+                      fullWidth
+                      type="password"
+                      label="Password"
+                      name="password"
+                    />
+                  </Grid>
+                  <Grid item xs={12} className={classes.item}>
+                    <Button
+                      color="primary"
+                      fullWidth
+                      variant="contained"
+                      disabled={isSubmitting}
+                      type="submit"
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                </Grid>
               </Form>
             )}
           </Formik>
         </div>
       </Container>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="error">
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
