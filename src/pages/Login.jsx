@@ -7,12 +7,10 @@ import {
   Typography,
   Grid,
   Container,
-  Snackbar,
 } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 
 import { TextField } from "formik-material-ui";
-import MuiAlert from "@material-ui/lab/Alert";
 
 import * as Yup from "yup";
 
@@ -20,6 +18,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import links from "../constants/links";
 import { jwt } from "../services/authentication";
 import AuthContext from "../contexts/AuthContext";
+import Snackbar from "../components/Snackbar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
       height: "100px"
   }
 }));
-
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-};
 
 export default () => {
   const classes = useStyles();
@@ -133,13 +128,9 @@ export default () => {
       </Container>
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-      >
-        <Alert onClose={handleCloseSnackbar} severity="error">
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+        message={snackbarMessage}
+      />
     </div>
   );
 };
