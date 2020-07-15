@@ -81,7 +81,6 @@ const useStyles = makeStyles(theme => ({
 export default () => {
   const [appointment, setAppointment] = useState();
   const [alert, setAlert] = useState(false);
-  const [confirm, setConfirm] = useState(false);
   const location = useLocation();
   const history = useHistory();
   const classes = useStyles();
@@ -91,7 +90,7 @@ export default () => {
   const handleClose = () => setAlert(false)
   const handleConfirm = () => {
     confirmAppointment(appointmentId)
-      .then(setConfirm(true))
+      .then(setAppointment({...appointment, appointmentIsConfirmed: true}))
   }
   const handleDelete = () => {
     deleteAppointment(appointmentId)
@@ -106,7 +105,7 @@ export default () => {
       setAppointment(data);
     };
     getData();
-  }, [confirm]);
+  }, [appointmentId]);
 
   return (
     !appointment ?
