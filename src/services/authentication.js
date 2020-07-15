@@ -84,7 +84,7 @@ function login(data) {
                 localStorage.setItem('x-access-token-expiration', timeout);
                 return { ...response.data, state: 'login', timeout }
             },
-            rejected => handle(rejected.response.status)
+            rejected => Promise.reject(rejected.response.status)
         )
 }
 
