@@ -11,6 +11,7 @@ import Message from "./pages/Message";
 import Messages from "./pages/Messages";
 import NewMessage from "./pages/NewMessage";
 import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import { AuthProvider } from "./contexts/AuthContext"
 import {
@@ -35,6 +36,7 @@ const App = () => {
             <Route exact path={links.messages_id} component={AuthRoute(Message, 'access:viewer')} />
             <Route exact path={links.messages} component={AuthRoute(Messages, 'access:viewer')} />
             <Route exact path={links.login} component={Login} />
+            <Route exact path={links.not_found} component={NotFound} />
             {/* TODO: enable signup route when SU and Access granting is implemented
             <Route exact path={links.signup} component={Signup} /> */}
             <Route>
