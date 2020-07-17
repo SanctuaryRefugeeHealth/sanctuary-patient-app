@@ -6,6 +6,7 @@ const messages_id = "/appointments/:appointment_id/messages/:id";
 const messages_new = "/appointments/:id/messages/new";
 const login = "/login";
 const signup = "/signup";
+const not_found = "/404";
 
 export default {
   appointments,
@@ -15,5 +16,6 @@ export default {
   messages_id,
   messages_new,
   login,
-  signup
+  signup,
+  not_found,
 };

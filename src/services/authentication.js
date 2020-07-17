@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import links from "../constants/links";
+
 const API_HOST = process.env.REACT_APP_API_HOST
 const API_URL = `${API_HOST}/api`
 const TOKEN_TIMEOUT = parseInt(process.env.REACT_APP_TOKEN_TIMEOUT)
@@ -8,13 +10,19 @@ const TOKEN_TIMEOUT = parseInt(process.env.REACT_APP_TOKEN_TIMEOUT)
 const on401 = _ => {
     localStorage.removeItem('x-access-token')
     localStorage.removeItem('x-access-token-expiration')
-    return window.location.href = '/login'
+    return window.location.href = links.login;
+}
+
+const on404 = _ => {
+    return window.location.href = links.not_found;
 }
 
 const handlers = {
     401: on401,
+    404: on404,
 }
-const errorHandle = defaultHandle => (code, message) => handlers[code] || defaultHandle(code, message)  // currying
+
+const errorHandle = defaultHandle => (code, message) => (handlers[code] || defaultHandle)(code, message)  // currying
 const handle = errorHandle((code, message) => Promise.reject(message || `Request error (${code})`))  // set default error handler
 
 // HTTP request methods w/ JWT
