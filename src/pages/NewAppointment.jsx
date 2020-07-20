@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -31,8 +31,7 @@ import {
 import DateFnsUtils from "@date-io/date-fns";
 
 import links from "../constants/links";
-import languages from "../constants/languages";
-import { createAppointment } from "../services";
+import { createAppointment, getLanguages } from "../services";
 import Snackbar from "../components/Snackbar";
 
 const AppointmentForm = ({ children, initialValues, onSubmit }) => {
@@ -144,7 +143,7 @@ const NewAppointment = () => {
   const initialValues = {
     patientName: "",
     patientPhoneNumber: "",
-    patientLanguage: "english",
+    patientLanguage: "English",
     practitionerClinicName: "",
     specialistName: "",
     practitionerPhoneNumber: "",
@@ -153,18 +152,28 @@ const NewAppointment = () => {
     appointmentTime: new Date(),
   };
 
-  const [formData, setFormData] = useState(initialValues);
+  const formatLanguageOptions = (languages) => {
+    return languages.map((language) => {
+      return (
+        <MenuItem value={language.name} key={language.name}>
+          {language.name}
+        </MenuItem>
+      );
+    });
+  };
 
-  const languageOptions = languages.map((language) => {
-    return (
-      <MenuItem
-        value={language.name.toLowerCase()}
-        key={language.name.toLowerCase()}
-      >
-        {language.name}
-      </MenuItem>
-    );
-  });
+  const [formData, setFormData] = useState(initialValues);
+  const [languageOptions, setLanguageOptions] = useState(
+    formatLanguageOptions([{ name: "English" }])
+  );
+
+  useEffect(() => {
+    const loadLanguages = async () => {
+      const languages = await getLanguages();
+      setLanguageOptions(formatLanguageOptions(languages));
+    };
+    loadLanguages();
+  }, []);
 
   const formatPhoneNumber = (pn) =>
     `+1 (${pn.substring(0, 3)}) ${pn.substring(3, 6)}-${pn.substring(6)} `;
