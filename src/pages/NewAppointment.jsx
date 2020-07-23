@@ -150,7 +150,7 @@ const NewAppointment = () => {
     practitionerPhoneNumber: "",
     location: "",
     appointmentDate: new Date(),
-    appointmentTime: new Date(),
+    appointmentTime: null,
   };
 
   const [formData, setFormData] = useState(initialValues);
