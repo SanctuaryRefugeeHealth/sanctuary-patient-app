@@ -399,6 +399,7 @@ const NewAppointment = () => {
                         id="appointmentTime"
                         name="appointmentTime"
                         label="Appointment Time"
+                        minutesStep="5"
                       />
                     </FormControl>
                   </Grid>
