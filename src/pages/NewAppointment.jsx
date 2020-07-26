@@ -150,7 +150,7 @@ const NewAppointment = () => {
     practitionerPhoneNumber: "",
     location: "",
     appointmentDate: new Date(),
-    appointmentTime: new Date(),
+    appointmentTime: null,
   };
 
   const [formData, setFormData] = useState(initialValues);
@@ -399,6 +399,7 @@ const NewAppointment = () => {
                         id="appointmentTime"
                         name="appointmentTime"
                         label="Appointment Time"
+                        minutesStep="5"
                       />
                     </FormControl>
                   </Grid>
