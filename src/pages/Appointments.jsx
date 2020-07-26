@@ -71,6 +71,11 @@ const initHeaders = [
     direction: undefined // desc or asc,
   },
   {
+    label: "Language",
+    field: "patientLanguage",
+    direction: undefined
+  },
+  {
     label: "Confirmed",
     field: "appointmentIsConfirmed",
     direction: undefined // desc or asc,
@@ -148,6 +153,7 @@ export default function Appointments() {
               .toLowerCase()
               .includes(searchText.toLowerCase()) ||
             row.practitionerClinicName.toLowerCase().includes(searchText.toLowerCase()) ||
+            row.patientLanguage.toLowerCase().includes(searchText.toLowerCase()) ||
             row.practitionerAddress.toLowerCase().includes(searchText.toLowerCase())
         )
         .filter(
@@ -221,6 +227,7 @@ export default function Appointments() {
               <TableCell>{row.practitionerClinicName}</TableCell>
               <TableCell>{row.practitionerAddress}</TableCell>
               <TableCell>{moment(row.appointmentTime).format("llll")}</TableCell>
+              <TableCell>{row.patientLanguage}</TableCell>
               <TableCell>{row.appointmentIsConfirmed ? "Yes" : "No"}</TableCell>
             </TableRow>
           ))}
