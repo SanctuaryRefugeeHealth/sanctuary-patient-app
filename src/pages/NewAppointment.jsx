@@ -179,12 +179,18 @@ const NewAppointment = () => {
               "YYYY-MM-DD"
             );
             const appointmentTime = moment(values.appointmentTime).format(
-              "HH:mm:ss"
+              "HH:mm"
             );
-            await createAppointment({
-              ...formData,
+
+            const appointment = {
+              ...values,
               date: `${appointmentDate} ${appointmentTime}`,
-            });
+            }
+
+            delete appointment.appointmentDate;
+            delete appointment.appointmentTime;
+            
+            await createAppointment(appointment);
           }}
         >
           <AppointmentFormStep
