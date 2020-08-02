@@ -1,7 +1,7 @@
-import languages from '../constants/languages'
+import { jwt } from "./authentication";
 
 const getLanguages = () => {
-  return new Promise(r => r(languages));
+  return jwt.get("/languages");
 };
 
 export { getLanguages };
