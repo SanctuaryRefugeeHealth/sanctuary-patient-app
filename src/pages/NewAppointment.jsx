@@ -456,7 +456,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0, 3),
   },
   content: {
-    height: "42vh",
+    minHeight: "42vh",
     padding: theme.spacing(2, 1, 9),
   },
   title: {
