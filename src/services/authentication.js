@@ -39,7 +39,7 @@ export const jwt = {
 
 const header = _ => {
     const token = localStorage.getItem('x-access-token')
-    return { headers: { 'x-access-token': token } }
+    return { headers: { 'Authorization': `Bearer ${token}` } }
 }
 
 function get(link) {
