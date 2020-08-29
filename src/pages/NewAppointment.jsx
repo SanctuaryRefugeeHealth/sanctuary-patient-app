@@ -46,11 +46,7 @@ const AppointmentForm = ({ children, initialValues, onSubmit }) => {
     setSnackbarOpen(false);
   };
 
-  const stepsText = [
-    "Patient Information",
-    "Clinic Information",
-    "Appointment Information",
-  ];
+  const stepsText = ["Patient Information", "Appointment Information"];
 
   const stepLabels = stepsText.map((label) => {
     return (
@@ -144,12 +140,11 @@ const NewAppointment = () => {
     patientName: "",
     patientPhoneNumber: "",
     patientLanguage: "English",
-    practitionerClinicName: "",
-    specialistName: "",
-    practitionerPhoneNumber: "",
     location: "",
     appointmentDate: new Date(),
     appointmentTime: null,
+    appointmentDescription: null,
+    specialNotes: null,
   };
 
   const formatLanguageOptions = (languages) => {
@@ -194,11 +189,11 @@ const NewAppointment = () => {
             const appointment = {
               ...values,
               date: `${appointmentDate} ${appointmentTime}`,
-            }
+            };
 
             delete appointment.appointmentDate;
             delete appointment.appointmentTime;
-            
+
             await createAppointment(appointment);
           }}
         >
@@ -261,75 +256,10 @@ const NewAppointment = () => {
             </div>
           </AppointmentFormStep>
           <AppointmentFormStep
-            onSubmit={async (values) => {
-              setFormData(values);
-            }}
-            validationSchema={Yup.object({
-              practitionerClinicName: Yup.string().required("required"),
-              specialistName: Yup.string().required("required"),
-              practitionerPhoneNumber: Yup.string()
-                .matches(/\d+/, "phone number must only contain numbers")
-                .length(10, "phone number must be 10 digits long")
-                .required("required"),
-              location: Yup.string().required("required"),
-            })}
-          >
-            <div className={classes.content}>
-              <Typography
-                variant="h6"
-                className={classes.subtitle}
-                gutterBottom
-              >
-                Clinic
-              </Typography>
-              <Grid container spacing={3}>
-                <Grid item xs={6} sm={4}>
-                  <Field
-                    component={TextField}
-                    fullWidth
-                    id="practitionerClinicName"
-                    name="practitionerClinicName"
-                    label="Clinic Name"
-                    type="text"
-                  />
-                </Grid>
-                <Grid item xs={6} sm={4}>
-                  <Field
-                    component={TextField}
-                    fullWidth
-                    id="specialistName"
-                    name="specialistName"
-                    label="Specialist Name"
-                    type="text"
-                  />
-                </Grid>
-                <Grid item xs={6} sm={4}>
-                  <Field
-                    component={TextField}
-                    fullWidth
-                    id="practitionerPhoneNumber"
-                    name="practitionerPhoneNumber"
-                    label="Phone Number"
-                    type="text"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Field
-                    component={TextField}
-                    fullWidth
-                    id="location"
-                    name="location"
-                    label="Address"
-                    type="text"
-                  />
-                </Grid>
-              </Grid>
-            </div>
-          </AppointmentFormStep>
-          <AppointmentFormStep
             validationSchema={Yup.object({
               appointmentDate: Yup.date().required("required").nullable(),
               appointmentTime: Yup.date().required("required").nullable(),
+              location: Yup.string().required("required"),
             })}
           >
             <div className={classes.content}>
@@ -363,39 +293,31 @@ const NewAppointment = () => {
                 className={classes.subtitle}
                 gutterBottom
               >
-                Clinic
-              </Typography>
-              <Grid container spacing={1}>
-                <Grid item xs={4} sm={4}>
-                  <Typography className={classes.textField}>
-                    {formData.practitionerClinicName}
-                  </Typography>
-                </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Typography className={classes.textField}>
-                    {formData.specialistName}
-                  </Typography>
-                </Grid>
-                <Grid item xs={4} sm={4}>
-                  <Typography className={classes.textField}>
-                    {formatPhoneNumber(formData.practitionerPhoneNumber)}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography className={classes.textField} gutterBottom>
-                    {formData.location}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Typography
-                variant="h6"
-                className={classes.subtitle}
-                gutterBottom
-              >
                 Appointment
               </Typography>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container spacing={1}>
+
+                  <Grid item xs={12}>
+                    <Field
+                      component={TextField}
+                      fullWidth
+                      id="appointmentDescription"
+                      name="appointmentDescription"
+                      label="Description"
+                      type="text"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      component={TextField}
+                      fullWidth
+                      id="location"
+                      name="location"
+                      label="Address"
+                      type="text"
+                    />
+                  </Grid>
                   <Grid item xs={6} sm={6}>
                     <FormControl className={classes.formControl} fullWidth>
                       <Field
@@ -417,6 +339,16 @@ const NewAppointment = () => {
                         minutesStep="5"
                       />
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      component={TextField}
+                      fullWidth
+                      id="specialNotes"
+                      name="specialNotes"
+                      label="Special Notes"
+                      type="text"
+                    />
                   </Grid>
                 </Grid>
               </MuiPickersUtilsProvider>
