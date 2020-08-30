@@ -143,7 +143,7 @@ const NewAppointment = () => {
     location: "",
     appointmentDate: new Date(),
     appointmentTime: null,
-    appointmentDescription: null,
+    description: null,
     specialNotes: null,
   };
 
@@ -302,8 +302,8 @@ const NewAppointment = () => {
                     <Field
                       component={TextField}
                       fullWidth
-                      id="appointmentDescription"
-                      name="appointmentDescription"
+                      id="description"
+                      name="description"
                       label="Description"
                       type="text"
                     />

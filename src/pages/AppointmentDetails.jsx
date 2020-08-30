@@ -135,7 +135,7 @@ export default () => {
           <Grid container spacing={1}>
             <Grid item xs={12} className={classes.row}>
               <Typography gutterBottom>Description</Typography>
-              <Typography gutterBottom>{appointment.appointmentDescription}</Typography>
+              <Typography gutterBottom>{appointment.description}</Typography>
             </Grid>
             <Grid item xs={12} className={classes.row}>
               <Typography gutterBottom>Address</Typography>
