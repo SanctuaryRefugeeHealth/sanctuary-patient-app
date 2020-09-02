@@ -131,28 +131,16 @@ export default () => {
             </Grid>
           </Grid>
 
-          <Typography variant="h6" className={classes.subtitle} gutterBottom>Clinic</Typography>
+          <Typography variant="h6" className={classes.subtitle} gutterBottom>Appointment</Typography>
           <Grid container spacing={1}>
             <Grid item xs={12} className={classes.row}>
-              <Typography gutterBottom>Name</Typography>
-              <Typography gutterBottom>{appointment.practitionerClinicName}</Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.row}>
-              <Typography gutterBottom>Practitioner</Typography>
-              <Typography gutterBottom>{appointment.practitionerName}</Typography>
+              <Typography gutterBottom>Description</Typography>
+              <Typography gutterBottom>{appointment.description}</Typography>
             </Grid>
             <Grid item xs={12} className={classes.row}>
               <Typography gutterBottom>Address</Typography>
               <Typography gutterBottom>{appointment.practitionerAddress}</Typography>
             </Grid>
-            <Grid item xs={12} className={classes.row}>
-              <Typography gutterBottom>Phone</Typography>
-              <Typography gutterBottom>{appointment.practitionerPhoneNumber}</Typography>
-            </Grid>
-          </Grid>
-
-          <Typography variant="h6" className={classes.subtitle} gutterBottom>Appointment</Typography>
-          <Grid container spacing={1}>
             <Grid item xs={12} className={classes.row}>
               <Typography gutterBottom>Date</Typography>
               <Typography gutterBottom>
@@ -164,6 +152,10 @@ export default () => {
               <Typography gutterBottom>
                 {appointment.appointmentIsConfirmed ? "Yes" : "No"}
               </Typography>
+            </Grid>
+            <Grid item xs={12} className={classes.row}>
+              <Typography gutterBottom>Special Notes</Typography>
+              <Typography gutterBottom>{appointment.specialNotes}</Typography>
             </Grid>
           </Grid>
         </Paper>

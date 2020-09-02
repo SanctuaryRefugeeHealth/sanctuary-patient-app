@@ -51,16 +51,6 @@ const initHeaders = [
     direction: undefined // desc or asc,
   },
   {
-    label: "Practitioner",
-    field: "practitionerName",
-    direction: undefined // desc or asc,
-  },
-  {
-    label: "Clinic",
-    field: "practitionerClinicName",
-    direction: undefined // desc or asc,
-  },
-  {
     label: "Address",
     field: "practitionerAddress",
     direction: undefined // desc or asc,
@@ -149,10 +139,6 @@ export default function Appointments() {
             !searchText ||
             row.patientName.toLowerCase().includes(searchText.toLowerCase()) ||
             row.patientPhoneNumber.toLowerCase().includes(searchText.toLowerCase()) ||
-            row.practitionerName
-              .toLowerCase()
-              .includes(searchText.toLowerCase()) ||
-            row.practitionerClinicName.toLowerCase().includes(searchText.toLowerCase()) ||
             row.patientLanguage.toLowerCase().includes(searchText.toLowerCase()) ||
             row.practitionerAddress.toLowerCase().includes(searchText.toLowerCase())
         )
@@ -223,8 +209,6 @@ export default function Appointments() {
                 {row.patientName}
               </TableCell>
               <TableCell>{row.patientPhoneNumber}</TableCell>
-              <TableCell>{row.practitionerName}</TableCell>
-              <TableCell>{row.practitionerClinicName}</TableCell>
               <TableCell>{row.practitionerAddress}</TableCell>
               <TableCell>{moment(row.appointmentTime).format("llll")}</TableCell>
               <TableCell>{row.patientLanguage}</TableCell>
