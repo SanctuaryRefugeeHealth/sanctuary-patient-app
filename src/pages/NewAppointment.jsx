@@ -140,7 +140,7 @@ const NewAppointment = () => {
     patientName: "",
     patientPhoneNumber: "",
     patientLanguage: "English",
-    location: "",
+    practitionerAddress: "",
     appointmentDate: new Date(),
     appointmentTime: null,
     description: null,
@@ -259,7 +259,7 @@ const NewAppointment = () => {
             validationSchema={Yup.object({
               appointmentDate: Yup.date().required("required").nullable(),
               appointmentTime: Yup.date().required("required").nullable(),
-              location: Yup.string().required("required"),
+              practitionerAddress: Yup.string().required("required"),
             })}
           >
             <div className={classes.content}>
@@ -312,8 +312,8 @@ const NewAppointment = () => {
                     <Field
                       component={TextField}
                       fullWidth
-                      id="location"
-                      name="location"
+                      id="practitionerAddress"
+                      name="practitionerAddress"
                       label="Address"
                       type="text"
                     />
