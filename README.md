@@ -22,6 +22,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 1. [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 2. Create your secret access key on the AWS console under IAM. Securely record the ID and secret.
 3. `aws configure`, using the ID and secret from above. Use `ca-central-1` as the default region.
+4. Create `.env.production` with lines `REACT_APP_API_HOST=https://sanctuary-api.happenate.com` and `REACT_APP_TOKEN_TIMEOUT=43200000`.
 
 ### `yarn build`
 
