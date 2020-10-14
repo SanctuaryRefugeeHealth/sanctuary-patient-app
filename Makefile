@@ -5,4 +5,4 @@
 BUCKET := sanctuary.happenate.com
 
 upload:
-	@aws s3 sync ./build s3://${BUCKET}
+	@aws --profile sanctuary s3 sync ./build s3://${BUCKET}
