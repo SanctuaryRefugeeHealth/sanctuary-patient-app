@@ -2,7 +2,7 @@
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -10,7 +10,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
@@ -24,7 +24,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 3. `aws configure`, using the ID and secret from above. Use `ca-central-1` as the default region.
 4. Create `.env.production` with lines `REACT_APP_API_HOST=https://sanctuary-api.happenate.com` and `REACT_APP_TOKEN_TIMEOUT=43200000`.
 
-### `yarn build`
+### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
