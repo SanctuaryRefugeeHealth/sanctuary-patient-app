@@ -27,11 +27,21 @@
     "react-scripts": "^3.4.0",
     "yup": "^0.29.1"
   },
+  "devDependencies": {
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "prettier": "2.1.2",
+    "eslint": "^7.11.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint . --fix",
+    "pretty": "./node_modules/.bin/prettier --check src/**/*.js src/**/*.jsx",
+    "pretty:fix": "./node_modules/.bin/prettier --write src/**/*.js src/**/*.jsx"
   },
   "eslintConfig": {
     "extends": [

@@ -1,4 +1,4 @@
-import ContentSwitch from './ContentSwitch';
+import ContentSwitch from "./ContentSwitch";
 import AuthRoute from "./AuthRoute";
 import Copyright from "./Copyright";
 import Header from "./Header";

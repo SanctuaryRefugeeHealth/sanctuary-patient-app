@@ -1,13 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Avatar,
-  Button,
-  Typography,
-  Grid,
-  Container,
-} from "@material-ui/core";
+import { Avatar, Button, Typography, Grid, Container } from "@material-ui/core";
 import { Formik, Form, Field } from "formik";
 
 import { TextField } from "formik-material-ui";
@@ -31,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   item: {
-      height: "100px"
-  }
+    height: "100px",
+  },
 }));
 
 export default () => {
