@@ -16,8 +16,8 @@ const updateAppointmentConfirmed = (id, confirmed = true) => {
   return jwt.patch(`/appointments/${id}`, { isConfirmed: confirmed })
 }
 
-const confirmAppointment = id => {
-  return updateAppointmentConfirmed(id, true)
+const updateInterpreterRequested = (id, interpreterRequsted = true) => {
+  return jwt.patch(`/appointments/${id}`, { translator: interpreterRequsted })
 }
 
 const deleteAppointment = id => {
@@ -28,6 +28,7 @@ export {
   getAppointments,
   getAppointment,
   createAppointment,
-  confirmAppointment,
+  updateAppointmentConfirmed,
+  updateInterpreterRequested,
   deleteAppointment
 }
