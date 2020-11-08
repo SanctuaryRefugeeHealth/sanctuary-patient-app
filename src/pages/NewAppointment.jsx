@@ -297,7 +297,6 @@ const NewAppointment = () => {
               </Typography>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container spacing={1}>
-
                   <Grid item xs={12}>
                     <Field
                       component={TextField}

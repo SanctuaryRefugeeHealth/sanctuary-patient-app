@@ -7,27 +7,27 @@ import {
   TableHead,
   TableRow,
   Button,
-  Paper
+  Paper,
 } from "@material-ui/core/";
 import { useHistory, useLocation } from "react-router-dom";
 import moment from "moment";
 import { getCommunications } from "../services/messages";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     overflowX: "auto",
     marginBottom: theme.spacing(5),
   },
   table: {
-    minWidth: 650
+    minWidth: 650,
   },
   replyRow: {
-    backgroundColor: "lightGrey"
+    backgroundColor: "lightGrey",
   },
   button: {
-    marginBottom: "8px"
-  }
+    marginBottom: "8px",
+  },
 }));
 
 export default function Messages() {
@@ -38,11 +38,28 @@ export default function Messages() {
   const appointmentId = location.pathname.split("/").pop();
 
   useEffect(() => {
-    getCommunications(appointmentId).then(resp => {
-      const messages = resp.messages.map(o => { return { sender: "Sanctuary", body: o.messageBody, datetime: o.timeSent, lang: o.language } })
-      const replies = resp.replies.map(o => { return { sender: o.phoneNumber, body: o.body, datetime: o.time, lang: "", isReply: true } })
-      const rows = [...messages, ...replies].sort((a, b) => new moment(b.datetime) - new moment(a.datetime))
-      setData(rows)
+    getCommunications(appointmentId).then((resp) => {
+      const messages = resp.messages.map((o) => {
+        return {
+          sender: "Sanctuary",
+          body: o.messageBody,
+          datetime: o.timeSent,
+          lang: o.language,
+        };
+      });
+      const replies = resp.replies.map((o) => {
+        return {
+          sender: o.phoneNumber,
+          body: o.body,
+          datetime: o.time,
+          lang: "",
+          isReply: true,
+        };
+      });
+      const rows = [...messages, ...replies].sort(
+        (a, b) => new moment(b.datetime) - new moment(a.datetime)
+      );
+      setData(rows);
     });
   }, []);
 
@@ -70,10 +87,11 @@ export default function Messages() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
+            {rows.map((row) => (
               <TableRow
                 key={row.name}
-                className={row.isReply ? classes.replyRow : null}>
+                className={row.isReply ? classes.replyRow : null}
+              >
                 <TableCell component="th" scope="row">
                   {row.sender}
                 </TableCell>
