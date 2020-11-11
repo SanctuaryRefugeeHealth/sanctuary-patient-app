@@ -18,9 +18,9 @@ import {
   TableSortLabel,
   Button,
 } from "@material-ui/core";
-import moment from "moment";
 import { getAppointments } from "../services/appointments";
 import PaginationActions from "../components/PaginationActions";
+import { formatDatetime, formatPhoneNumber } from "../utils/format";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -123,14 +123,9 @@ export default function Appointments() {
     });
     setFilteredRows(sorted);
   };
-  const removeTimezonePostfix = (datetime) =>
-    moment.utc(datetime).format("YYYY-MM-DD HH:mm:ss");
 
   useEffect(() => {
     getAppointments().then((resp) => {
-      resp.map(
-        (a) => (a.appointmentTime = removeTimezonePostfix(a.appointmentTime))
-      );
       setData(resp);
     });
   }, [setData]);
@@ -235,11 +230,9 @@ export default function Appointments() {
               <TableCell component="th" scope="row">
                 {row.patientName}
               </TableCell>
-              <TableCell>{row.patientPhoneNumber}</TableCell>
+              <TableCell>{formatPhoneNumber(row.patientPhoneNumber)}</TableCell>
               <TableCell>{row.practitionerAddress}</TableCell>
-              <TableCell>
-                {moment(row.appointmentTime).format("llll")}
-              </TableCell>
+              <TableCell>{formatDatetime(row.appointmentTime)}</TableCell>
               <TableCell>{row.patientLanguage}</TableCell>
               <TableCell>{row.appointmentIsConfirmed ? "Yes" : "No"}</TableCell>
             </TableRow>

@@ -6,12 +6,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Button,
   Paper,
 } from "@material-ui/core/";
-import { useHistory, useLocation } from "react-router-dom";
-import moment from "moment";
+import { useLocation } from "react-router-dom";
 import { getCommunications } from "../services/messages";
+import { formatDatetime, formatPhoneNumber } from "../utils/format";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +32,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Messages() {
   const classes = useStyles();
   const [rows, setData] = useState([]);
-  const history = useHistory();
   const location = useLocation();
   const appointmentId = location.pathname.split("/").pop();
 
@@ -49,60 +47,59 @@ export default function Messages() {
       });
       const replies = resp.replies.map((o) => {
         return {
-          sender: o.phoneNumber,
+          sender: formatPhoneNumber(o.phoneNumber),
           body: o.body,
           datetime: o.time,
           lang: "",
           isReply: true,
         };
       });
+
+      // Sort by time. Newest messagest at the top.
       const rows = [...messages, ...replies].sort(
-        (a, b) => new moment(b.datetime) - new moment(a.datetime)
+        (a, b) => {
+          if (b.datetime > a.datetime) {
+            return 1;
+          } else if (b.datetime < a.datetime) {
+            return -1;
+          }
+          return 0;
+        }
       );
+      
       setData(rows);
     });
-  }, []);
+  }, [appointmentId]);
 
   return (
-    <>
-      {/* TODO: sending message manually. block this button unless manual sending is supported.
-      <Button
-        onClick={() => {
-          const appointmentId = location.pathname.split("/").pop();
-          history.push(`${appointmentId}/messages/new`);
-        }}
-        variant="contained"
-        color="primary"
-        className={classes.button}>
-        New Message
-      </Button> */}
-      <Paper className={classes.root}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Sender</TableCell>
-              <TableCell align="right">Body</TableCell>
-              <TableCell align="right">Date/Time</TableCell>
-              <TableCell align="right">Language</TableCell>
+    <Paper className={classes.root}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Sender</TableCell>
+            <TableCell align="right">Body</TableCell>
+            <TableCell align="right">Date/Time</TableCell>
+            <TableCell align="right">Language</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.name}
+              className={row.isReply ? classes.replyRow : null}
+            >
+              <TableCell component="th" scope="row">
+                {row.sender}
+              </TableCell>
+              <TableCell>{row.body}</TableCell>
+              <TableCell align="right">
+                {formatDatetime(row.datetime)}
+              </TableCell>
+              <TableCell align="right">{row.lang}</TableCell>
             </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                className={row.isReply ? classes.replyRow : null}
-              >
-                <TableCell component="th" scope="row">
-                  {row.sender}
-                </TableCell>
-                <TableCell align="right">{row.body}</TableCell>
-                <TableCell align="right">{row.datetime}</TableCell>
-                <TableCell align="right">{row.lang}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    </>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
   );
 }
