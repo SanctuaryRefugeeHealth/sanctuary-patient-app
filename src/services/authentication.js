@@ -37,7 +37,6 @@ export const jwt = {
   remove,
   login,
   logout,
-  signup,
 };
 
 const header = (_) => {
@@ -98,15 +97,6 @@ function logout() {
   localStorage.removeItem("x-access-token");
   localStorage.removeItem("x-access-token-expiration");
   return new Promise((r) => r({ state: "logout", timeout: 0 }));
-}
-
-function signup(data) {
-  return axios
-    .put(`${API_URL}/user`, { email: data.email, password: data.password })
-    .then(
-      (_) => login(data),
-      (rejected) => handle(rejected.response.status)
-    );
 }
 
 export function isAuthenticated() {

@@ -7,12 +7,8 @@ import { AuthRoute, Header, Footer } from "./components";
 import Appointment from "./pages/Appointment";
 import Appointments from "./pages/Appointments";
 import NewAppointment from "./pages/NewAppointment";
-import Message from "./pages/Message";
-import Messages from "./pages/Messages";
-import NewMessage from "./pages/NewMessage";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import Signup from "./pages/Signup";
 import { AuthProvider } from "./contexts/AuthContext";
 import {
   BrowserRouter as Router,
@@ -43,21 +39,6 @@ const App = () => {
               exact
               path={links.appointments}
               component={AuthRoute(Appointments, "access:viewer")}
-            />
-            <Route
-              exact
-              path={links.messages_new}
-              component={AuthRoute(NewMessage, "access:editor")}
-            />
-            <Route
-              exact
-              path={links.messages_id}
-              component={AuthRoute(Message, "access:viewer")}
-            />
-            <Route
-              exact
-              path={links.messages}
-              component={AuthRoute(Messages, "access:viewer")}
             />
             <Route exact path={links.login} component={Login} />
             <Route exact path={links.not_found} component={NotFound} />

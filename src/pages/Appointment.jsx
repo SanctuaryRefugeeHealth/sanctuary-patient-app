@@ -9,7 +9,6 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import AppointmentDetails from "./AppointmentDetails";
 import Messages from "./Messages";
-import NewMessage from "./NewMessage";
 import links from "../constants/links";
 import { useHistory } from "react-router-dom";
 
