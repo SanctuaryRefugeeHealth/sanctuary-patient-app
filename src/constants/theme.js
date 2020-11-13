@@ -4,15 +4,15 @@ const theme = createMuiTheme({
   overrides: {
     MuiTableHead: {
       root: {
-        backgroundColor: "cadetBlue"
-      }
+        backgroundColor: "cadetBlue",
+      },
     },
     MuiTableRow: {
       hover: {
-        cursor: "pointer"
-      }
-    }
-  }
+        cursor: "pointer",
+      },
+    },
+  },
 });
 
 export default theme;

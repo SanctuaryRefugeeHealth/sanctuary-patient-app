@@ -11,13 +11,13 @@ import {
   DialogActions,
   DialogTitle,
 } from "@material-ui/core/";
-import moment from "moment";
 import {
   getAppointment,
   updateAppointmentConfirmed,
   updateInterpreterRequested,
   deleteAppointment,
 } from "../services/appointments";
+import { formatDatetime, formatPhoneNumber } from "../utils/format";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -122,13 +122,10 @@ export default () => {
   const handleDelete = () => {
     deleteAppointment(appointmentId).then(() => history.push(`/appointments`));
   };
-  const removeTimezonePostfix = (datetime) =>
-    moment.utc(datetime).format("YYYY-MM-DD HH:mm:ss");
 
   useEffect(() => {
     const getData = async () => {
       const data = await getAppointment(appointmentId);
-      data.appointmentTime = removeTimezonePostfix(data.appointmentTime);
       setAppointment(data);
     };
     getData();
@@ -163,7 +160,7 @@ export default () => {
           <Grid item xs={12} className={classes.row}>
             <Typography gutterBottom>Phone</Typography>
             <Typography gutterBottom>
-              {appointment.patientPhoneNumber}
+              {formatPhoneNumber(appointment.patientPhoneNumber)}
             </Typography>
           </Grid>
         </Grid>
@@ -185,7 +182,7 @@ export default () => {
           <Grid item xs={12} className={classes.row}>
             <Typography gutterBottom>Date</Typography>
             <Typography gutterBottom>
-              {moment(appointment.appointmentTime).format("llll")}
+              {formatDatetime(appointment.appointmentTime)}
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.row}>

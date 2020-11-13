@@ -1,11 +1,7 @@
-import { jwt } from './authentication';
-
-const getMessages = (id) => {
-  return jwt.get(`/appointments/${id}/messages`)
-}
+import { jwt } from "./authentication";
 
 const getCommunications = (id) => {
-  return jwt.get(`/communications/${id}`)
-}
+  return jwt.get(`/communications/${id}`);
+};
 
-export { getMessages, getCommunications }
+export { getCommunications };

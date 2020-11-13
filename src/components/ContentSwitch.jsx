@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ContentSwitch = ({ index, children, ...rest }) => {
   const arr = React.Children.toArray(children);

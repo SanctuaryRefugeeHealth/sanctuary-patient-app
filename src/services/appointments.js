@@ -1,28 +1,28 @@
-import { jwt } from './authentication';
+import { jwt } from "./authentication";
 
 const getAppointments = () => {
   return jwt.get("/appointments");
-}
+};
 
-const getAppointment = id => {
+const getAppointment = (id) => {
   return jwt.get(`/appointments/${id}`);
-}
+};
 
-const createAppointment = appointment => {
-  return jwt.post('/appointments', appointment);
-}
+const createAppointment = (appointment) => {
+  return jwt.post("/appointments", appointment);
+};
 
 const updateAppointmentConfirmed = (id, confirmed = true) => {
-  return jwt.patch(`/appointments/${id}`, { isConfirmed: confirmed })
-}
+  return jwt.patch(`/appointments/${id}`, { isConfirmed: confirmed });
+};
 
 const updateInterpreterRequested = (id, interpreterRequsted = true) => {
   return jwt.patch(`/appointments/${id}`, { translator: interpreterRequsted })
-}
+};
 
-const deleteAppointment = id => {
-  return jwt.patch(`/appointments/${id}`, { isDeleted: true })
-}
+const deleteAppointment = (id) => {
+  return jwt.patch(`/appointments/${id}`, { isDeleted: true });
+};
 
 export {
   getAppointments,
@@ -30,5 +30,5 @@ export {
   createAppointment,
   updateAppointmentConfirmed,
   updateInterpreterRequested,
-  deleteAppointment
-}
+  deleteAppointment,
+};

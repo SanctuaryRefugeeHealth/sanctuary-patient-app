@@ -9,7 +9,6 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import AppointmentDetails from "./AppointmentDetails";
 import Messages from "./Messages";
-import NewMessage from "./NewMessage";
 import links from "../constants/links";
 import { useHistory } from "react-router-dom";
 
@@ -33,20 +32,20 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  }
+  },
 }));
 
 export default function SimpleTabs() {

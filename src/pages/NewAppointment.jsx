@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Field, Form, Formik } from "formik";
 
-import moment from "moment";
 import * as Yup from "yup";
 
 import {
@@ -33,6 +32,8 @@ import DateFnsUtils from "@date-io/date-fns";
 import links from "../constants/links";
 import { createAppointment, getLanguages } from "../services";
 import Snackbar from "../components/Snackbar";
+
+import { formatPhoneNumber, formatDate, formatTime } from "../utils/format";
 
 const AppointmentForm = ({ children, initialValues, onSubmit }) => {
   const classes = useStyles();
@@ -170,21 +171,14 @@ const NewAppointment = () => {
     loadLanguages();
   }, []);
 
-  const formatPhoneNumber = (pn) =>
-    `+1 (${pn.substring(0, 3)}) ${pn.substring(3, 6)}-${pn.substring(6)} `;
-
   return (
     <div className={classes.layout}>
       <Paper className={classes.paper}>
         <AppointmentForm
           initialValues={initialValues}
           onSubmit={async (values) => {
-            const appointmentDate = moment(values.appointmentDate).format(
-              "YYYY-MM-DD"
-            );
-            const appointmentTime = moment(values.appointmentTime).format(
-              "HH:mm"
-            );
+            const appointmentDate = formatDate(values.appointmentDate);
+            const appointmentTime = formatTime(values.appointmentTime);
 
             const appointment = {
               ...values,
@@ -297,7 +291,6 @@ const NewAppointment = () => {
               </Typography>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container spacing={1}>
-
                   <Grid item xs={12}>
                     <Field
                       component={TextField}
@@ -336,7 +329,7 @@ const NewAppointment = () => {
                         id="appointmentTime"
                         name="appointmentTime"
                         label="Appointment Time"
-                        minutesStep="5"
+                        minutesStep={5}
                       />
                     </FormControl>
                   </Grid>
