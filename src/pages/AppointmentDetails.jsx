@@ -208,27 +208,26 @@ export default () => {
         </Grid>
       </Paper>
       <div className={classes.buttons}>
-        {appointment.appointmentIsConfirmed ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleUnconfirm}
-            className={classes.button}
-            type="button"
-          >
-            Decline
-          </Button>
-        ) : (
           <Button
             variant="contained"
             color="primary"
             onClick={handleConfirm}
             className={classes.button}
             type="button"
+            disabled={appointment.appointmentIsConfirmed}
           >
             Confirm
           </Button>
-        )}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUnconfirm}
+            className={classes.button}
+            type="button"
+            disabled={appointment.appointmentIsConfirmed === false}
+          >
+            Decline
+          </Button>
         {appointment.translator ? (
           <Button
             variant="contained"
