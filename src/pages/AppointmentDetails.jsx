@@ -100,13 +100,12 @@ export default () => {
   const handleUnconfirm = () => setConfirm(false);
 
   const getResponseText = (confirmed) => {
-    if (confirmed === undefined || confirmed === null) {
-      return "None";
-    } else if (confirmed == false) {
+    if (confirmed === false) {
       return "Declined";
-    } else if (confirmed == true) {
+    } else if (confirmed === true) {
       return "Confirmed";
     }
+    return "None";
   };
 
   const setInterpreter = (interpreterRequested) => {
@@ -125,6 +124,12 @@ export default () => {
   useEffect(() => {
     const getData = async () => {
       const data = await getAppointment(appointmentId);
+      const confirmed = data.appointmentIsConfirmed;
+      if (confirmed === 1) {
+        data.appointmentIsConfirmed = true;
+      } else if (confirmed === 0) {
+        data.appointmentIsConfirmed = false;
+      }
       setAppointment(data);
     };
     getData();
