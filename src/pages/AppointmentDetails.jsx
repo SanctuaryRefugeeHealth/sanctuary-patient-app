@@ -94,16 +94,27 @@ export default () => {
     updateAppointmentConfirmed(appointmentId, confirmed).then(
       setAppointment({ ...appointment, appointmentIsConfirmed: confirmed })
     );
-  }
+  };
 
   const handleConfirm = () => setConfirm(true);
   const handleUnconfirm = () => setConfirm(false);
+
+  const getResponseText = (confirmed) => {
+    console.log("----------- ", confirmed, " ----------")
+    if (confirmed === undefined || confirmed === null) {
+      return "None";
+    } else if (confirmed == false) {
+      return "Declined";
+    } else if (confirmed == true) {
+      return "Confirmed";
+    }
+  };
 
   const setInterpreter = (interpreterRequested) => {
     updateInterpreterRequested(appointmentId, interpreterRequested).then(
       setAppointment({ ...appointment, translator: interpreterRequested })
     );
-  }
+  };
 
   const handleInterpreter = () => setInterpreter(true);
   const handleCancelInterpreter = () => setInterpreter(false);
@@ -178,9 +189,9 @@ export default () => {
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.row}>
-            <Typography gutterBottom>Is Confirmed</Typography>
+            <Typography gutterBottom>Response</Typography>
             <Typography gutterBottom>
-              {appointment.appointmentIsConfirmed ? "Yes" : "No"}
+              {getResponseText(appointment.appointmentIsConfirmed)}
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.row}>
@@ -204,7 +215,7 @@ export default () => {
             className={classes.button}
             type="button"
           >
-            Unconfirm
+            Decline
           </Button>
         ) : (
           <Button
