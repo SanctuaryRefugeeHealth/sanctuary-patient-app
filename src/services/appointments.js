@@ -24,7 +24,18 @@ const deleteAppointment = (id) => {
   return jwt.patch(`/appointments/${id}`, { isDeleted: true });
 };
 
+
+const getResponseText = (confirmed) => {
+  if (confirmed === 0) {
+    return "Declined";
+  } else if (confirmed === 1) {
+    return "Confirmed";
+  }
+  return "None";
+};
+
 export {
+  getResponseText,
   getAppointments,
   getAppointment,
   createAppointment,

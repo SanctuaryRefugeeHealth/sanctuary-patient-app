@@ -16,6 +16,7 @@ import {
   updateAppointmentConfirmed,
   updateInterpreterRequested,
   deleteAppointment,
+  getResponseText,
 } from "../services/appointments";
 import { formatDatetime, formatPhoneNumber } from "../utils/format";
 
@@ -79,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const [appointment, setAppointment] = useState();
   const [alert, setAlert] = useState(false);
@@ -99,15 +101,6 @@ export default () => {
   const handleConfirm = () => setConfirm(true);
   const handleUnconfirm = () => setConfirm(false);
 
-  const getResponseText = (confirmed) => {
-    if (confirmed === false) {
-      return "Declined";
-    } else if (confirmed === true) {
-      return "Confirmed";
-    }
-    return "None";
-  };
-
   const setInterpreter = (interpreterRequested) => {
     updateInterpreterRequested(appointmentId, interpreterRequested).then(
       setAppointment({ ...appointment, translator: interpreterRequested })
@@ -123,14 +116,11 @@ export default () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getAppointment(appointmentId);
-      const confirmed = data.appointmentIsConfirmed;
-      if (confirmed === 1) {
-        data.appointmentIsConfirmed = true;
-      } else if (confirmed === 0) {
-        data.appointmentIsConfirmed = false;
-      }
-      setAppointment(data);
+      const appointment = await getAppointment(appointmentId);
+      appointment.response = getResponseText(
+        appointment.appointmentIsConfirmed
+      );
+      setAppointment(appointment);
     };
     getData();
   }, [appointmentId]);
@@ -191,9 +181,7 @@ export default () => {
           </Grid>
           <Grid item xs={12} className={classes.row}>
             <Typography gutterBottom>Response</Typography>
-            <Typography gutterBottom>
-              {getResponseText(appointment.appointmentIsConfirmed)}
-            </Typography>
+            <Typography gutterBottom>{appointment.response}</Typography>
           </Grid>
           <Grid item xs={12} className={classes.row}>
             <Typography gutterBottom>Interpreter Requested</Typography>
@@ -208,26 +196,26 @@ export default () => {
         </Grid>
       </Paper>
       <div className={classes.buttons}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleConfirm}
-            className={classes.button}
-            type="button"
-            disabled={appointment.appointmentIsConfirmed}
-          >
-            Confirm
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleUnconfirm}
-            className={classes.button}
-            type="button"
-            disabled={appointment.appointmentIsConfirmed === false}
-          >
-            Decline
-          </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleConfirm}
+          className={classes.button}
+          type="button"
+          disabled={appointment.appointmentIsConfirmed}
+        >
+          Confirm
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleUnconfirm}
+          className={classes.button}
+          type="button"
+          disabled={appointment.appointmentIsConfirmed === false}
+        >
+          Decline
+        </Button>
         {appointment.translator ? (
           <Button
             variant="contained"

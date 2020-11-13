@@ -18,7 +18,7 @@ import {
   TableSortLabel,
   Button,
 } from "@material-ui/core";
-import { getAppointments } from "../services/appointments";
+import { getAppointments, getResponseText } from "../services/appointments";
 import PaginationActions from "../components/PaginationActions";
 import { formatDatetime, formatPhoneNumber } from "../utils/format";
 
@@ -66,8 +66,8 @@ const initHeaders = [
     direction: undefined,
   },
   {
-    label: "Confirmed",
-    field: "appointmentIsConfirmed",
+    label: "Response",
+    field: "response",
     direction: undefined, // desc or asc,
   },
 ];
@@ -125,9 +125,16 @@ export default function Appointments() {
   };
 
   useEffect(() => {
-    getAppointments().then((resp) => {
-      setData(resp);
-    });
+    async function fetchAppointments() {
+      const appointments = await getAppointments();
+      appointments.forEach((appointment) => {
+        appointment.response = getResponseText(
+          appointment.appointmentIsConfirmed
+        );
+      });
+      setData(appointments);
+    }
+    fetchAppointments();
   }, [setData]);
 
   useEffect(() => {
@@ -149,16 +156,10 @@ export default function Appointments() {
         )
         .filter((row) => {
           switch (confirmed) {
-            case "null":
-              return row.appointmentIsConfirmed === null;
-            case "Yes":
-              return row.appointmentIsConfirmed === 1;
-            case "No":
-              return row.appointmentIsConfirmed === 0;
             case "All":
-              return row;
+              return true;
             default:
-              return false;
+              return row.response === confirmed;
           }
         })
     );
@@ -175,16 +176,16 @@ export default function Appointments() {
           style={{ width: 300 }}
         />
         <FormControl style={{ marginLeft: "auto" }}>
-          <InputLabel id="confirmed">Confirmed?</InputLabel>
+          <InputLabel id="confirmed">Response?</InputLabel>
           <Select
             labelId="confirmed"
             value={confirmed}
             onChange={(e) => setConfirmed(e.target.value)}
             style={{ width: "200px", marginRight: 10 }}
           >
-            <MenuItem value="null">No Response</MenuItem>
-            <MenuItem value="Yes">Yes</MenuItem>
-            <MenuItem value="No">No</MenuItem>
+            <MenuItem value="None">None</MenuItem>
+            <MenuItem value="Confirmed">Confirmed</MenuItem>
+            <MenuItem value="Declined">Declined</MenuItem>
             <MenuItem value="All">All</MenuItem>
           </Select>
         </FormControl>
@@ -234,7 +235,7 @@ export default function Appointments() {
               <TableCell>{row.practitionerAddress}</TableCell>
               <TableCell>{formatDatetime(row.appointmentTime)}</TableCell>
               <TableCell>{row.patientLanguage}</TableCell>
-              <TableCell>{row.appointmentIsConfirmed ? "Yes" : "No"}</TableCell>
+              <TableCell>{row.response}</TableCell>
             </TableRow>
           ))}
 
