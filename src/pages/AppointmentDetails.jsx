@@ -100,7 +100,6 @@ export default () => {
   const handleUnconfirm = () => setConfirm(false);
 
   const getResponseText = (confirmed) => {
-    console.log("----------- ", confirmed, " ----------")
     if (confirmed === undefined || confirmed === null) {
       return "None";
     } else if (confirmed == false) {
