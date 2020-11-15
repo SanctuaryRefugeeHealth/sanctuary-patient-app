@@ -13,8 +13,10 @@ import {
 } from "@material-ui/core/";
 import {
   getAppointment,
-  confirmAppointment,
+  updateAppointmentConfirmed,
+  updateInterpreterRequested,
   deleteAppointment,
+  getResponseText,
 } from "../services/appointments";
 import { formatDatetime, formatPhoneNumber } from "../utils/format";
 
@@ -78,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const [appointment, setAppointment] = useState();
   const [alert, setAlert] = useState(false);
@@ -88,19 +91,36 @@ export default () => {
 
   const handleAlert = () => setAlert(true);
   const handleClose = () => setAlert(false);
-  const handleConfirm = () => {
-    confirmAppointment(appointmentId).then(
-      setAppointment({ ...appointment, appointmentIsConfirmed: true })
+
+  const setConfirm = (confirmed) => {
+    updateAppointmentConfirmed(appointmentId, confirmed).then(
+      setAppointment({ ...appointment, appointmentIsConfirmed: confirmed })
     );
   };
+
+  const handleConfirm = () => setConfirm(true);
+  const handleUnconfirm = () => setConfirm(false);
+
+  const setInterpreter = (interpreterRequested) => {
+    updateInterpreterRequested(appointmentId, interpreterRequested).then(
+      setAppointment({ ...appointment, translator: interpreterRequested })
+    );
+  };
+
+  const handleInterpreter = () => setInterpreter(true);
+  const handleCancelInterpreter = () => setInterpreter(false);
+
   const handleDelete = () => {
     deleteAppointment(appointmentId).then(() => history.push(`/appointments`));
   };
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getAppointment(appointmentId);
-      setAppointment(data);
+      const appointment = await getAppointment(appointmentId);
+      appointment.response = getResponseText(
+        appointment.appointmentIsConfirmed
+      );
+      setAppointment(appointment);
     };
     getData();
   }, [appointmentId]);
@@ -160,9 +180,13 @@ export default () => {
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.row}>
-            <Typography gutterBottom>Is Confirmed</Typography>
+            <Typography gutterBottom>Response</Typography>
+            <Typography gutterBottom>{appointment.response}</Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.row}>
+            <Typography gutterBottom>Interpreter Requested</Typography>
             <Typography gutterBottom>
-              {appointment.appointmentIsConfirmed ? "Yes" : "No"}
+              {appointment.translator ? "Yes" : "No"}
             </Typography>
           </Grid>
           <Grid item xs={12} className={classes.row}>
@@ -172,19 +196,45 @@ export default () => {
         </Grid>
       </Paper>
       <div className={classes.buttons}>
-        {appointment.appointmentIsConfirmed ? (
-          <Button className={classes.button} disabled>
-            Confirmed
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleConfirm}
+          className={classes.button}
+          type="button"
+          disabled={appointment.appointmentIsConfirmed}
+        >
+          Confirm
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleUnconfirm}
+          className={classes.button}
+          type="button"
+          disabled={appointment.appointmentIsConfirmed === false}
+        >
+          Decline
+        </Button>
+        {appointment.translator ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCancelInterpreter}
+            className={classes.button}
+            type="button"
+          >
+            Cancel Interpreter
           </Button>
         ) : (
           <Button
             variant="contained"
             color="primary"
-            onClick={handleConfirm}
+            onClick={handleInterpreter}
             className={classes.button}
             type="button"
           >
-            Confirm
+            Request Interpreter
           </Button>
         )}
         <Button
