@@ -38,8 +38,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "./node_modules/.bin/eslint .",
-    "lint:fix": "./node_modules/.bin/eslint . --fix",
+    "lint": "./node_modules/.bin/eslint --max-warnings 0 --ext js,jsx .",
+    "lint:fix": "./node_modules/.bin/eslint --max-warnings 0 --ext js,jsx --fix .",
     "pretty": "./node_modules/.bin/prettier --check src/**/*.js src/**/*.jsx",
     "pretty:fix": "./node_modules/.bin/prettier --write src/**/*.js src/**/*.jsx"
   },
@@ -47,7 +47,16 @@
     "extends": [
       "react-app",
       "prettier"
-    ]
+    ],
+    "rules": {
+      "import/no-anonymous-default-export": [
+        "error",
+        {
+          "allowArrowFunction": true
+        }
+      ],
+      "no-unused-vars": "error"
+    }
   },
   "browserslist": {
     "production": [

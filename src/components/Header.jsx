@@ -1,12 +1,5 @@
 import React, { useContext } from "react";
-import {
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  Link,
-  Button,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Link, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { jwt } from "../services/authentication";
 import AuthContext from "../contexts/AuthContext";

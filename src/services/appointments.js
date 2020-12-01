@@ -17,13 +17,12 @@ const updateAppointmentConfirmed = (id, confirmed = true) => {
 };
 
 const updateInterpreterRequested = (id, interpreterRequsted = true) => {
-  return jwt.patch(`/appointments/${id}`, { translator: interpreterRequsted })
+  return jwt.patch(`/appointments/${id}`, { translator: interpreterRequsted });
 };
 
 const deleteAppointment = (id) => {
   return jwt.patch(`/appointments/${id}`, { isDeleted: true });
 };
-
 
 const getResponseText = (confirmed) => {
   if (confirmed === 0) {

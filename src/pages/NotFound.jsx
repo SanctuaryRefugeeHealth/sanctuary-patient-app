@@ -9,8 +9,6 @@ import {
   StepLabel,
   FormControl,
   Paper,
-  MenuItem,
-  Grid,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
