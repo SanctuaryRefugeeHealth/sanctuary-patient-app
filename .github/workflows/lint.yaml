@@ -10,4 +10,4 @@ jobs:
       - name: Run ESLint
         run: npm run lint
       - name: Run Prettier
-        run: npm run prettier
+        run: npm run pretty
