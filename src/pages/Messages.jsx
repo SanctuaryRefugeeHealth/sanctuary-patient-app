@@ -56,17 +56,15 @@ export default function Messages() {
       });
 
       // Sort by time. Newest messagest at the top.
-      const rows = [...messages, ...replies].sort(
-        (a, b) => {
-          if (b.datetime > a.datetime) {
-            return 1;
-          } else if (b.datetime < a.datetime) {
-            return -1;
-          }
-          return 0;
+      const rows = [...messages, ...replies].sort((a, b) => {
+        if (b.datetime > a.datetime) {
+          return 1;
+        } else if (b.datetime < a.datetime) {
+          return -1;
         }
-      );
-      
+        return 0;
+      });
+
       setData(rows);
     });
   }, [appointmentId]);
