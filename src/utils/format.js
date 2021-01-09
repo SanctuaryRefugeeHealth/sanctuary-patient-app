@@ -1,17 +1,17 @@
 import moment from "moment";
 
 export function formatDatetime(datetime) {
-  return moment(moment.utc(datetime).format("YYYY-MM-DD HH:mm:ss")).format(
+  return moment(moment(datetime).format("YYYY-MM-DD HH:mm:ss")).format(
     "llll"
   );
 }
 
 export function formatDate(date) {
-  return moment.utc(date).format("YYYY-MM-DD");
+  return moment(date).format("YYYY-MM-DD");
 }
 
 export function formatTime(time) {
-  return moment.utc(time).format("HH:mm");
+  return moment(time).format("HH:mm");
 }
 
 export function formatPhoneNumber(pn) {
