@@ -1,9 +1,7 @@
 import moment from "moment";
 
 export function formatDatetime(datetime) {
-  return moment(moment(datetime).format("YYYY-MM-DD HH:mm:ss")).format(
-    "llll"
-  );
+  return moment(moment(datetime).format("YYYY-MM-DD HH:mm:ss")).format("llll");
 }
 
 export function formatDate(date) {
