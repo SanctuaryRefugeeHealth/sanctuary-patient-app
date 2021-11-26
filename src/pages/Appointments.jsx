@@ -58,7 +58,7 @@ const initHeaders = [
   {
     label: "Date",
     field: "appointmentTime",
-    direction: undefined, // desc or asc,
+    direction: "desc", // Current default sorting on load
   },
   {
     label: "Language",
@@ -74,8 +74,8 @@ const initHeaders = [
 
 const getNewDirection = (oldDirection) => {
   if (oldDirection === "asc") return "desc";
-  if (oldDirection === "desc") return undefined;
-  return "asc";
+  if (oldDirection === "desc") return "asc";
+  return "desc";
 };
 
 export default function Appointments() {
@@ -102,14 +102,24 @@ export default function Appointments() {
 
   const onHeaderClick = (i) => {
     const direction = getNewDirection(headers[i].direction);
-    setHeaders((prev) => [
-      ...prev.slice(0, i),
-      {
-        ...prev[i],
-        direction,
-      },
-      ...prev.slice(i + 1),
-    ]);
+    /**
+     * Iterate over headers and reset them all to default, except the one modified,
+     * as there is no multi header sorting.
+     */
+    setHeaders((prev) => {
+      return prev.map((header, index) => {
+        if (index === i) {
+          return {
+            ...header,
+            direction,
+          };
+        }
+        return {
+          label: header.label,
+          field: header.field,
+        };
+      });
+    });
     const { field } = initHeaders[i];
     const sorted = [...rows];
     sorted.sort((a, b) => {
@@ -131,6 +141,12 @@ export default function Appointments() {
         appointment.response = getResponseText(
           appointment.appointmentIsConfirmed
         );
+      });
+      // Sort on appointmentTime desc by default
+      appointments.sort((a, b) => {
+        return b["appointmentTime"] > a["appointmentTime"]
+          ? 1
+          : -1;
       });
       setData(appointments);
     }
