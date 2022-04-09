@@ -19,7 +19,7 @@
     "formik": "^2.1.4",
     "formik-material-ui": "^2.0.1",
     "formik-material-ui-pickers": "^0.0.10",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-final-form": "^6.3.3",
