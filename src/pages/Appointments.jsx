@@ -144,9 +144,7 @@ export default function Appointments() {
       });
       // Sort on appointmentTime desc by default
       appointments.sort((a, b) => {
-        return b["appointmentTime"] > a["appointmentTime"]
-          ? 1
-          : -1;
+        return b["appointmentTime"] > a["appointmentTime"] ? 1 : -1;
       });
       setData(appointments);
     }
