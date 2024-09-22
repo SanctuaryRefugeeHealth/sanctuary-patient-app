@@ -34,6 +34,14 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+# Uploading Operations
+
+The upload script will default to our test bucket in S3 `test.sanctuary.happenate.com`.  In order to upload to a different bucket, it will need to be passed to the `make` command as a parameter `BUCKET=BUCKET_NAME` (eg. `BUCKET=sanctuary.happenate.com`)
+
+### `make upload_dryrun`
+
+Dryrun publish build to the S3 bucket.  Use this build to validate that the files being uploaded match your expectations.
+
 ### `make upload`
 
-Publish build to the s3 bucket.
+Publish build to the S3 bucket.
