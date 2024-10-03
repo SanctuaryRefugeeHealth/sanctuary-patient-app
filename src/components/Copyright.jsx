@@ -8,7 +8,7 @@ export default () => {
       <Link color="inherit" href="https://sanctuaryrefugee.ca/">
         Healthcaring KW Health Centre
       </Link>
-      {" 2020"}
+      {" 2024"}
     </Typography>
   );
 };
