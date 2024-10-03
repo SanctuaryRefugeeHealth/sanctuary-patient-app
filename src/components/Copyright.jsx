@@ -6,9 +6,9 @@ export default () => {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://sanctuaryrefugee.ca/">
-        Sanctuary Refugee Health Centre
+        Healthcaring KW Health Centre
       </Link>
-      {" 2020"}
+      {" 2024"}
     </Typography>
   );
 };
