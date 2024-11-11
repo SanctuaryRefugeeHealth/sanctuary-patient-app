@@ -39,7 +39,7 @@ export default function Messages() {
     getCommunications(appointmentId).then((resp) => {
       const messages = resp.messages.map((o) => {
         return {
-          sender: "Sanctuary",
+          sender: "FamilyMedicine",
           body: o.messageBody,
           datetime: o.timeSent,
           lang: o.language,

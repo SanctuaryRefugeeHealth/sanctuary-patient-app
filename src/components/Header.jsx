@@ -57,7 +57,7 @@ export default () => {
           className={classes.toolbarTitle}
         >
           <Link href="/" underline="none">
-            Sanctuary Patient App
+            Centre for Family Medicine Patient App
           </Link>
         </Typography>
         {auth.state === "login" && (
